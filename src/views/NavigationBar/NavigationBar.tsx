@@ -21,7 +21,7 @@ const NavigationBar: React.FC = props => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand href="/">Das Lebens Journal</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -43,7 +43,7 @@ const NavigationBar: React.FC = props => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
+          <NavbarText>Logout</NavbarText>
         </Collapse>
       </Navbar>
     </div>
