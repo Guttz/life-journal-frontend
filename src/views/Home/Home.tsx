@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import NavigationBar from './../NavigationBar/NavigationBar';
 
-const Home: React.FC = () => {
+const Home: React.FC = (props) => {
+  debugger
   return(
     <NavigationBar />
   )

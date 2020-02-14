@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import Home from './views/Home/Home';
+import Homev from './views/Home/Home';
+import Home from './containers/Home';
 import Page404 from './views/Pages/Page404/Page404';
 import logo from './logo.svg';
 import './App.css';
@@ -13,9 +14,10 @@ const App: React.FC = () => {
       <React.Suspense fallback={loading()}>
         <Switch>
           <Route exact path="/404" render={props => <Page404 />} />
-          <Route exact path="/home" render={props => <Home />} />
+          <Route path="/" render={props => <Home />} />
           <Route
-            path="/"
+            path="/default"
+            exact
             render={props => (
               <div className="App">
                 <header className="App-header">
