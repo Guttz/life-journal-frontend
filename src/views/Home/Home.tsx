@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import NavigationBar from './../NavigationBar/NavigationBar';
 
-const Home: React.FC = (props) => {
-  debugger
-  return(
-    <NavigationBar />
-  )
+export interface Memory {
+  id: number;
+  description: any;
+}
+
+const Home: React.FC<{ items?: Memory[] }> = ({ items = [] }) => {
+  return (
+    <div>
+      <NavigationBar />
+      {items.map((item, i) => (
+        <li key={i}> {item.id + '. ' + item.description} </li>
+      ))}
+    </div>
+  );
+};
 };
 
 export default Home;
