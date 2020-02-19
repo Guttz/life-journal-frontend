@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NavigationBar from './../NavigationBar/NavigationBar';
+import PropTypes from 'prop-types'; 
 
 export interface Memory {
   id: number;
@@ -16,6 +17,9 @@ const Home: React.FC<{ items?: Memory[] }> = ({ items = [] }) => {
     </div>
   );
 };
+
+Home.propTypes = {
+  items: PropTypes.array,
 };
 
 export default Home;
