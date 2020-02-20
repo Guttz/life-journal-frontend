@@ -1,15 +1,18 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import Homev from './views/Home/Home';
+import { Provider } from 'react-redux';
+import configureStore from './store/rootStore';
 import Home from './containers/Home';
 import Page404 from './views/Pages/Page404/Page404';
 import logo from './logo.svg';
 import './App.css';
 
+const store = configureStore();
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 const App: React.FC = () => {
   return (
+    <Provider store={store}>
     <HashRouter>
       <React.Suspense fallback={loading()}>
         <Switch>
@@ -35,6 +38,7 @@ const App: React.FC = () => {
         </Switch>
       </React.Suspense>
     </HashRouter>
+    </Provider>
   );
 };
 
