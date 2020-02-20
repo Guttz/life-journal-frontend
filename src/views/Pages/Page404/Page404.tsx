@@ -18,7 +18,7 @@ const Page404: React.FC = (props) => {
                   <i className="fa fa-search"></i>
                 </InputGroupText>
               </InputGroupAddon>
-              <Input size={16} type="text" placeholder="What are you looking for?" />
+              <Input type="text" placeholder="What are you looking for?" />
               <InputGroupAddon addonType="append">
                 <Button color="info">Search</Button>
               </InputGroupAddon>
