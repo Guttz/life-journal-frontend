@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import NavigationBar from './../NavigationBar/NavigationBar';
-import PropTypes from 'prop-types'; 
-
-export interface Memory {
-  id: number;
-  description: any;
-}
+import Memory from './../../models/MemoryModel';
+import PropTypes from 'prop-types';
 
 const Home: React.FC<{ items?: Memory[] }> = ({ items = [] }) => {
   return (
@@ -18,6 +14,7 @@ const Home: React.FC<{ items?: Memory[] }> = ({ items = [] }) => {
   );
 };
 
+// [Question] Prop Validation in Typescript
 Home.propTypes = {
   items: PropTypes.array,
 };

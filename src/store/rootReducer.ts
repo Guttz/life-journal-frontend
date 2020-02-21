@@ -1,16 +1,8 @@
 import ACTIONS from './actions';
+import Memory from './../models/MemoryModel';
 import _ from 'lodash';
 
-export interface Memory {
-  id: number;
-  description: any;
-}
-
-export interface MemoriesState {
-  items: Memory[];
-}
-
-const defaultState: MemoriesState = {
+const defaultState: { items: Memory[] } = {
   items: [
     { id: 10, description: 'd10' },
     { id: 11, description: 'd11' },
