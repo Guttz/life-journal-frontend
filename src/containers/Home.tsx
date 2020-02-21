@@ -8,9 +8,10 @@ const mapStateToProps = (state: any): any => {
   };
 };
 
+// Question - Best way to mapDipatchToProps, dispatch here or in view
 const mapDispatchToProps = (dispatch: any): any => ({
-  createItem: actions.createItem,
-  deleteItem: actions.deleteItem,
-})
+  createItem: (description: string): void => dispatch(actions.createItem(description)),
+  deleteItem: (id: number): void => dispatch(actions.deleteItem(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

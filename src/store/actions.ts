@@ -3,10 +3,12 @@ const Types = {
   CREATE_ITEM: 'CREATE_ITEM',
   DELETE_ITEM: 'DELETE_ITEM',
 };
+
+//[Question] - Should I create models for actions returns so I can declare functions return types?
 // actions
-const createItem = (task: string) => ({
+const createItem = (description: string) => ({
   type: Types.CREATE_ITEM,
-  payload: task,
+  payload: description,
 });
 
 const deleteItem = (id: number) => ({
