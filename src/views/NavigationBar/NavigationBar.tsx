@@ -20,30 +20,30 @@ const NavigationBar: React.FC = props => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar color="primary" style={{ display: 'flex', flexDirection: 'row' }} light expand="md">
         <NavbarBrand href="/">Das Lebens Journal</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <NavLink href="/timeline/">Timeline</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+              <NavLink href="/media/">Media</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/map/">Map</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                About
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                <DropdownItem>Gustavo Morais</DropdownItem>
+                <DropdownItem>Github</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Logout</NavbarText>
         </Collapse>
       </Navbar>
     </div>
