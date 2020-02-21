@@ -1,0 +1,5 @@
+.delete-item-span{
+  background: '#000000';
+  cursor: 'pointer';
+  color: 'red'
+}
