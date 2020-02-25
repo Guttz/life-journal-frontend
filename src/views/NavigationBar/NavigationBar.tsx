@@ -21,12 +21,12 @@ const NavigationBar: React.FC = props => {
   return (
     <div>
       <Navbar color="primary" style={{ display: 'flex', flexDirection: 'row' }} light expand="md">
-        <NavbarBrand href="/">Das Lebens Journal</NavbarBrand>
+        <NavbarBrand href="/">The Music Timeline</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/timeline/">Timeline</NavLink>
+              <NavLink href="/#/timeline/">Timeline</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/media/">Media</NavLink>
@@ -39,8 +39,8 @@ const NavigationBar: React.FC = props => {
                 About
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Gustavo Morais</DropdownItem>
-                <DropdownItem>Github</DropdownItem>
+                <DropdownItem href="https://gustavomorais.me">Gustavo Morais</DropdownItem>
+                <DropdownItem href="https://github.com/Guttz">Github</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
