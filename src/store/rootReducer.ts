@@ -4,11 +4,13 @@ import _ from 'lodash';
 
 const defaultState: { items: Memory[] } = {
   items: [
-    { id: 10, description: 'd10' },
-    { id: 11, description: 'd11' },
+    { id: 1, description: 'Graduating high school' },
+    { id: 2, description: "Studying for Universities' Tests" },
+    { id: 3, description: 'Accepted in University'}
   ],
 };
 
+// [Question] Defining return type of a whole reducer/state aprt
 const todoReducer = (state = defaultState, action: any) => {
   switch (action.type) {
     case ACTIONS.Types.CREATE_ITEM: {

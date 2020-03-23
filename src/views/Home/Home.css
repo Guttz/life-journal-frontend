@@ -3,3 +3,7 @@
   cursor: 'pointer';
   color: 'red'
 }
+
+body {
+  background: '#f8f8f8';
+}
