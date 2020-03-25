@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'reactstrap';
 import axios from 'axios';
 import NavigationBar from './../NavigationBar/NavigationBar';
@@ -81,14 +81,28 @@ const Home: React.FC<Props> = ({ items = [], createItem = (): void => {}, delete
         }}
       ></input>
       {spofitySearchResultList[spofitySearchListSelectedIndex] && (
-        <audio ref={audioRef} controls>
-          <source src={spofitySearchResultList[spofitySearchListSelectedIndex].preview_url} type="audio/mpeg"></source>
-          Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
-        </audio>
+        <div>
+          <span>{spofitySearchResultList[spofitySearchListSelectedIndex].name}</span>
+          <audio ref={audioRef} controls>
+            <source
+              src={spofitySearchResultList[spofitySearchListSelectedIndex].preview_url}
+              type="audio/mpeg"
+            ></source>
+            Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
+          </audio>
+        </div>
       )}
 
       {spofitySearchResultList.map((item, i) => (
-        <div key={i} onMouseOver={() => {setSpofitySearchListSelectedIndex(i) }}>
+        <div
+          key={i}
+          onMouseOver={() => {
+            setSpofitySearchListSelectedIndex(i);
+            audioRef.current?.pause();
+            audioRef.current?.load();
+            audioRef.current?.play();
+          }}
+        >
           <img src={item.album.images[2].url}></img>
           <li style={{ display: 'inline-block' }}>{item.artists[0].name + ' - ' + item.name}</li>
         </div>
