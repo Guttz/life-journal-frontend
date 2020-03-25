@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Line, Group } from 'react-konva';
 import PropTypes from 'prop-types';
-import Portal from './portal';
+import Portal from './../utils/portal';
 
 const TextMoment = ({
   id,

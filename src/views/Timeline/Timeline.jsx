@@ -365,8 +365,9 @@ class Timeline extends Component {
             }}
             y={y}
           >
-            <Text
-              text="text"
+            <SongMoment
+              imgURL="https://i.scdn.co/image/ab67616d0000485128933b808bfb4cbbd0385400"
+              text="Uprising - Muse"
               x={100}
               y={100}
               fill="white"
