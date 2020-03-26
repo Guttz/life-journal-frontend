@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, Ring, Circle, Group } from 'react-konva';
+import { Text, Image, Ring, Circle, Line, Group } from 'react-konva';
 import useImage from 'use-image';
-import Portal from './../utils/portal';
-import { RGB } from 'konva/types/filters/RGB';
 
 type Props = {
   imgURL: string;
@@ -29,6 +27,7 @@ const SongMoment: React.FC<Props> = ({ imgURL, text, x, y, scaleX, scaleY, onDra
       draggable
       scaleX={scaleX}
       scaleY={scaleY}>
+      <Line points={[window.innerWidth / 2 - 100, y - 66, x + 80, y - 66]} stroke="grey" />
       <Image onClick={() => {}} width={66} height={66} scaleY={1} image={image} />
       <Ring x={33} y={33} innerRadius={35} outerRadius={47} fill="#333333"></Ring>
       <Circle x={33} y={33} radius={35} stroke="#26A65B" strokeWidth={2}></Circle>
