@@ -1,33 +1,27 @@
 import ACTIONS from './actions';
 import Memory from './../models/MemoryModel';
-import _ from 'lodash';
 
-const defaultState: { items: Memory[] } = {
+type defaultStateInterface = { items: Memory[]; lastIndex: number };
+
+const defaultState: defaultStateInterface = {
+  lastIndex: 2,
   items: [
-    { id: 1, description: 'Graduating high school' },
-    { id: 2, description: "Studying for Universities' Tests" },
-    { id: 3, description: 'Accepted in University'}
+    { id: 0, description: 'Graduating high school' },
+    { id: 1, description: "Studying for Universities' Tests" },
+    { id: 2, description: 'Accepted in University'}
   ],
 };
 
 // [Question] Defining return type of a whole reducer/state aprt
-const todoReducer = (state = defaultState, action: any) => {
+const todoReducer = (state = defaultState, action: any): defaultStateInterface => {
   switch (action.type) {
     case ACTIONS.Types.CREATE_ITEM: {
-      console.log(action);
-
-      const item = action.payload;
-      const newItem = { id: state.items.length + 1, description: item };
-      const newState = _.cloneDeep(state);
-      newState.items.push(newItem);
-      return newState;
+      const newItem = { id: state.lastIndex + 1, description: action.payload };
+      return { ...state, lastIndex: state.lastIndex + 1, items: [...state.items, newItem] };
     }
 
     case ACTIONS.Types.DELETE_ITEM: {
-      const newState = _.cloneDeep(state);
-      const index = _.findIndex(newState.items, { id: action.payload });
-      newState.items.splice(index, 1);
-      return newState;
+      return { ...state, items: [...state.items.slice(0, action.payload), ...state.items.slice(action.payload + 1)] };
     }
 
     default:
