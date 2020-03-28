@@ -1,8 +1,10 @@
-import { SongsInterface } from './songs/songs.interfaces';
+import { combineReducers } from 'redux';
+import reducer from './rootReducer';
+import songsReducer from './songs/songs.reducer';
 
-export interface RootState {
-  moments: {
-    lastIndex: number;
-    songs: SongsInterface;
-  };
-}
+export const rootReducer = combineReducers({
+  items: reducer,
+  songs: songsReducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;

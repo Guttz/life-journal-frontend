@@ -1,4 +1,4 @@
-import Timeline from '../views/Home/Home';
+import SongsComponent from '../views/Timeline/Songs/Songs';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch, AnyAction } from 'redux';
 import { RootState } from '../store/rootState';
@@ -8,8 +8,8 @@ import SongActions from '../store/songs/songs.actions';
 
 const mapStateToProps = (state: RootState): any => {
   return {
-    lastIndex: state.moments.lastIndex,
-    songs: state.moments.songs,
+    lastIndex: state.songs.lastIndex,
+    songs: state.songs.songs,
   };
 };
 
@@ -24,4 +24,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 // {isOn: boolean, toggleOn: () => void}
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
+export default connect(mapStateToProps, mapDispatchToProps)(SongsComponent);

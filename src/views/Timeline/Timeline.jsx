@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Konva from 'konva';
 import { Stage, Layer, Star, Text, Line } from 'react-konva';
 import NavigationBar from '../NavigationBar/NavigationBar';
+import Songs from './../../containers/SongsContainer';
 import SongMoment from '../../components/SongMoment/SongMoment';
 import TextMoment from '../../components/TextMoment/TextMoment';
 import AddMoment from '../../components/AddMoment/AddMoment';
@@ -347,6 +348,7 @@ class Timeline extends Component {
     } = this.state;
     return (
       <div className="App">
+        <Songs></Songs>
         <NavigationBar />
         <Stage
           ref={ref => {
