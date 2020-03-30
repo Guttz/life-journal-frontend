@@ -4,7 +4,7 @@ export type SongInterface = {
   artists: Array<string>;
   previewURL: string;
   imageURL: string;
-  importance?: number;
+  importance: number;
   x: number;
   y: number;
 };
