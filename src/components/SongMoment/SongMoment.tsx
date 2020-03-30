@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, Ring, Circle, Line, Group } from 'react-konva';
+import { Text, Image, Ring, Circle, Line, Group, Rect } from 'react-konva';
+import { SongInterface } from './../../store/songs/songs.interfaces';
 import Konva from 'konva';
 import useImage from 'use-image';
 
 type Props = {
-  imgURL: string;
-  name: string;
-  x: number;
-  y: number;
-  scaleX: number;
-  scaleY: number;
   onDragStart(event: any): void;
   onDragMove(event: any): void;
   onDragEnd(event: any): void;
@@ -17,20 +12,30 @@ type Props = {
   createItem?(task: string): any;
 };
 
-// eslint-disable-next-line react/prop-types
-const SongMoment: React.FC<Props> = ({
-  imgURL,
+const SongMoment: React.FC<SongInterface & Props> = ({
   name,
+  artists,
+  previewURL,
+  imageURL,
+  importance,
   x,
   y,
-  scaleX,
-  scaleY,
   onDragStart,
   onDragMove,
   onDragEnd,
   onDblClick,
 }) => {
-  const [image] = useImage(imgURL);
+  const [image] = useImage(imageURL);
+  const imgPixels = 64;
+  const [groupAttrs, setGroupAttrs] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  let groupRef: any = React.createRef();
+
+  useEffect(() => {
+    const groupAttrsAux: any = groupRef.getClientRect();
+    if (groupAttrsAux.height !== groupAttrs.height) {
+      setGroupAttrs(groupAttrsAux);
+    }
+  });
 
   return (
     <Group
@@ -40,14 +45,53 @@ const SongMoment: React.FC<Props> = ({
       onDragEnd={onDragEnd}
       onDblClick={onDblClick}
       draggable
-      scaleX={scaleX}
-      scaleY={scaleY}
+      scaleX={1}
+      scaleY={1}
     >
-      <Line points={[window.innerWidth / 2 - x, 33, 80, 33]} stroke="grey" />
-      <Image onClick={() => {}} width={66} height={66} scaleY={1} image={image} />
-      <Ring x={33} y={33} innerRadius={35} outerRadius={47} fill="#333333"></Ring>
-      <Circle x={33} y={33} radius={35} stroke="#26A65B" strokeWidth={2}></Circle>
-      <Text text={name} fill="white" x={86} y={24} />
+      <Line points={[window.innerWidth / 2 - x, groupAttrs.height / 2, 80, groupAttrs.height / 2]} stroke="grey" />
+      {/* <Rect width={groupAttrs.width} height={groupAttrs.height} fill="white"></Rect> */}
+      <Group
+        ref={ref => {
+          groupRef = ref;
+        }}
+        onClick={() => {
+          debugger;
+        }}
+        scaleX={1}
+        scaleY={1}
+      >
+        <Image
+          x={(imgPixels / 2) * (Math.sqrt(2) - 1)}
+          y={(imgPixels / 2) * (Math.sqrt(2) - 1)}
+          onClick={() => {
+            debugger;
+          }}
+          width={imgPixels}
+          height={imgPixels}
+          image={image}
+        />
+        <Ring
+          x={(imgPixels / 2) * Math.sqrt(2)}
+          y={(imgPixels / 2) * Math.sqrt(2)}
+          innerRadius={imgPixels / 2}
+          outerRadius={(imgPixels / 2) * Math.sqrt(2)}
+          fill="#333333"
+        ></Ring>
+        <Circle
+          x={(imgPixels / 2) * Math.sqrt(2)}
+          y={(imgPixels / 2) * Math.sqrt(2)}
+          radius={imgPixels / 2}
+          stroke="#26A65B"
+          strokeWidth={2}
+        ></Circle>
+        <Text text={name} fill="white" x={imgPixels * Math.sqrt(2)} y={imgPixels / 2 - 2} />
+        <Text
+          text={artists.toString().replace(/,/g, ', ')}
+          fill="grey"
+          x={imgPixels * Math.sqrt(2)}
+          y={imgPixels / 2 + 18}
+        />
+      </Group>
     </Group>
   );
 };
