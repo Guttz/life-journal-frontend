@@ -5,9 +5,14 @@ export type InsertSongType = {
   song: SongInterface;
 }
 
+export type UpdateSongType = {
+  type: 'ON_UPDATE_SONG';
+  song: SongInterface;
+}
+
 export type DeleteSongType = {
   type: 'ON_DELETE_SONG';
   id: number;
 }
 
-export type SongsActionsTypes = InsertSongType | DeleteSongType;
+export type SongsActionsTypes = InsertSongType | UpdateSongType | DeleteSongType;

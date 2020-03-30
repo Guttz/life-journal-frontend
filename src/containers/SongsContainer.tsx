@@ -16,6 +16,7 @@ const mapStateToProps = (state: RootState): any => {
 // Question - Best way to mapDipatchToProps, dispatch here or in view
 const mapDispatchToProps = (dispatch: Dispatch<SongsActionsTypes>): any => ({
   insertSong: (song: SongInterface): any => dispatch(SongActions.InsertSong(song)),
+  updateSong: (song: SongInterface): any => dispatch(SongActions.UpdateSong(song)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
