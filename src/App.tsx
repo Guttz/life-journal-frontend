@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/rootStore';
 import Home from './containers/Home';
-import Timeline from './views/Timeline/Timeline';
+import Timeline from './containers/Timeline';
 import Page404 from './views/Pages/Page404/Page404';
 import logo from './logo.svg';
 import './App.css';

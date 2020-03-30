@@ -1,4 +1,4 @@
-import Timeline from './../views/Home/Home';
+import Timeline from './../views/Timeline/Timeline';
 import { connect } from 'react-redux';
 import actions from './../store/actions';
 

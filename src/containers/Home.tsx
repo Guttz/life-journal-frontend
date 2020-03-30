@@ -4,7 +4,7 @@ import actions from './../store/actions';
 
 const mapStateToProps = (state: any): any => {
   return {
-    items: state.items,
+    items: state.items.items,
   };
 };
 
