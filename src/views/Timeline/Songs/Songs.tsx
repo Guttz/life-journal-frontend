@@ -18,6 +18,7 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
     if (updatedSong) {
       updatedSong.x = e.currentTarget.attrs.x;
       updatedSong.y = e.currentTarget.attrs.y;
+      updatedSong.importance = (2 * Math.abs(updatedSong.x - window.innerWidth / 2)) / window.innerWidth;
       updateSong(updatedSong);
     }
   };

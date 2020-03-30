@@ -45,10 +45,8 @@ const SongMoment: React.FC<SongInterface & Props> = ({
       onDragEnd={onDragEnd}
       onDblClick={onDblClick}
       draggable
-      scaleX={1}
-      scaleY={1}
     >
-      <Line points={[window.innerWidth / 2 - x, groupAttrs.height / 2, 80, groupAttrs.height / 2]} stroke="grey" />
+      <Line points={[window.innerWidth / 2 - x, groupAttrs.height / 2, 0, groupAttrs.height / 2]} stroke="grey" />
       {/* <Rect width={groupAttrs.width} height={groupAttrs.height} fill="white"></Rect> */}
       <Group
         ref={ref => {
@@ -57,8 +55,8 @@ const SongMoment: React.FC<SongInterface & Props> = ({
         onClick={() => {
           debugger;
         }}
-        scaleX={1}
-        scaleY={1}
+        scaleX={0.5 + importance}
+        scaleY={0.5 + importance}
       >
         <Image
           x={(imgPixels / 2) * (Math.sqrt(2) - 1)}
