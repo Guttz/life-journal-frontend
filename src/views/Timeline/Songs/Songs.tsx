@@ -26,18 +26,13 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
       {songs.map((song: SongInterface) => (
         <SongMoment
           key={song.id}
-          imgURL={song.imageURL}
-          name={song.name}
-          x={song.x}
-          y={song.y}
+          {...song}
           onDragStart={() => {}}
           onDragMove={(e: Konva.KonvaEventObject<DragEvent>): void => onDragMove(e, song.id)}
           onDragEnd={() => {
             console.log('parou');
           }}
           onDblClick={() => {}}
-          scaleX={1}
-          scaleY={1}
         />
       ))}
     </Layer>

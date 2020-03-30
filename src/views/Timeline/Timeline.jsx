@@ -372,19 +372,6 @@ class Timeline extends Component {
                 }}
                 y={y}
               >
-                <SongMoment
-                  imgURL="https://i.scdn.co/image/ab67616d0000485128933b808bfb4cbbd0385400"
-                  name="Uprising - Muse"
-                  x={100}
-                  y={100}
-                  fill="white"
-                  onDragStart={this.onDragStart}
-                  onDragEnd={this.onDragEnd}
-                  onDblClick={this.onDblClick}
-                  draggable
-                  scaleX={1}
-                  scaleY={1}
-                />
                 {[...Array(30)].map(() => {
                   const starSize = Math.random();
                   return (
