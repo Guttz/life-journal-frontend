@@ -36,10 +36,11 @@ const SongMoment: React.FC<SongInterface & Props> = ({
       setGroupAttrs(groupAttrsAux);
     }
   });
-
+  debugger
   return (
     <Group
-      absolutePosition={{ x: x, y: y }}
+      x={x}
+      y={y}
       onDragStart={onDragStart}
       onDragMove={onDragMove}
       onDragEnd={onDragEnd}
@@ -52,18 +53,14 @@ const SongMoment: React.FC<SongInterface & Props> = ({
         ref={ref => {
           groupRef = ref;
         }}
-        onClick={() => {
-          debugger;
-        }}
+        onClick={() => {}}
         scaleX={0.5 + importance}
         scaleY={0.5 + importance}
       >
         <Image
           x={(imgPixels / 2) * (Math.sqrt(2) - 1)}
           y={(imgPixels / 2) * (Math.sqrt(2) - 1)}
-          onClick={() => {
-            debugger;
-          }}
+          onClick={() => {}}
           width={imgPixels}
           height={imgPixels}
           image={image}

@@ -6,24 +6,27 @@ import { SongInterface } from './../../../store/songs/songs.interfaces';
 
 type Props = {
   lastIndex: number;
+  layerY: number;
   songs: Array<SongInterface>;
   insertSong: (song: SongInterface) => void;
   updateSong: (song: SongInterface) => void;
 };
 
-const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong }) => {
+const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong, layerY }) => {
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
     //setGroupX(e.currentTarget.attrs.x);
     if (updatedSong) {
+      debugger
       updatedSong.x = e.currentTarget.attrs.x;
       updatedSong.y = e.currentTarget.attrs.y;
       updatedSong.importance = (2 * Math.abs(updatedSong.x - window.innerWidth / 2)) / window.innerWidth;
       updateSong(updatedSong);
     }
   };
+  debugger
   return (
-    <Layer>
+    <Layer y={layerY}>
       {songs.map((song: SongInterface) => (
         <SongMoment
           key={song.id}

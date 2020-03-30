@@ -115,6 +115,7 @@ class Timeline extends Component {
         Object.assign(updatedMoment, moment);
         updatedMoment.x = this.stageRef.getPointerPosition().x / window.innerWidth;
         updatedMoment.y = this.stageRef.getPointerPosition().y - this.layerRef.y();
+        debugger
         updatedMoment.size = size;
         return updatedMoment;
       }
@@ -347,6 +348,7 @@ class Timeline extends Component {
       scalingFactor,
       layer: { y, scrollPosition },
     } = this.state;
+    debugger
     return (
       <div className="App">
         <NavigationBar />
@@ -364,7 +366,7 @@ class Timeline extends Component {
               height={sHeight * 1}
             >
               <Provider store={store}>
-                <Songs></Songs>
+                <Songs layerY={y}></Songs>
               </Provider>
               <Layer
                 ref={ref => {
