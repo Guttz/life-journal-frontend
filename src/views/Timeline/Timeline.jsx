@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ReactReduxContext, Provider } from 'react-redux';
 import Konva from 'konva';
 import { Stage, Layer, Star, Text, Line } from 'react-konva';
 import NavigationBar from '../NavigationBar/NavigationBar';
@@ -348,165 +349,171 @@ class Timeline extends Component {
     } = this.state;
     return (
       <div className="App">
-        <Songs></Songs>
         <NavigationBar />
-        <Stage
-          ref={ref => {
-            this.stageRef = ref;
-          }}
-          onWheel={this.onStageWheel}
-          onTouchStart={this.onStageTouchStart}
-          onTouchMove={this.onStageTouchMove}
-          scaleY={stageScaleY}
-          width={sWidth}
-          height={sHeight * 1}
-        >
-          <Layer
-            ref={ref => {
-              this.layerRef = ref;
-            }}
-            y={y}
-          >
-            <SongMoment
-              imgURL="https://i.scdn.co/image/ab67616d0000485128933b808bfb4cbbd0385400"
-              text="Uprising - Muse"
-              x={100}
-              y={100}
-              fill="white"
-              onDragStart={this.onDragStart}
-              onDragEnd={this.onDragEnd}
-              onDblClick={this.onDblClick}
-              draggable
-              scaleX={1}
-              scaleY={1}
-            />
-            {[...Array(30)].map(() => {
-              const starSize = Math.random();
-              return (
-                <Star
-                  key={Math.random()}
-                  x={Math.random() * window.innerWidth}
-                  y={Math.random() * this.xHeight * window.innerHeight}
-                  numPoints={5}
-                  innerRadius={10}
-                  outerRadius={20}
-                  scale={{ x: 1.5 - starSize, y: 1.5 / stageScaleY - starSize }}
-                  // scale={{x:1.5 - starSize, y:1.5 - starSize}}
-                  fill="#0269A4"
-                  opacity={0.8}
+        <ReactReduxContext.Consumer>
+          {({ store }) => (
+            <Stage
+              ref={ref => {
+                this.stageRef = ref;
+              }}
+              onWheel={this.onStageWheel}
+              onTouchStart={this.onStageTouchStart}
+              onTouchMove={this.onStageTouchMove}
+              scaleY={stageScaleY}
+              width={sWidth}
+              height={sHeight * 1}
+            >
+              <Provider store={store}>
+                <Songs></Songs>
+              </Provider>
+              <Layer
+                ref={ref => {
+                  this.layerRef = ref;
+                }}
+                y={y}
+              >
+                <SongMoment
+                  imgURL="https://i.scdn.co/image/ab67616d0000485128933b808bfb4cbbd0385400"
+                  name="Uprising - Muse"
+                  x={100}
+                  y={100}
+                  fill="white"
+                  onDragStart={this.onDragStart}
+                  onDragEnd={this.onDragEnd}
+                  onDblClick={this.onDblClick}
                   draggable
-                  shadowColor="black"
-                  shadowBlur={10}
-                  shadowOpacity={0.6}
-                  onDragStart={this.starDragStart}
-                  onDragEnd={this.starDragEnd}
+                  scaleX={1}
+                  scaleY={1}
                 />
-              );
-            })}
-            <Line x={0} y={0} points={[sWidth / 2, 0, sWidth / 2, window.innerHeight * 5]} stroke="grey" />
-            {moments.map((_, i) => (
-              <TextMoment
-                key={moments[i].key}
-                id={moments[i].key}
-                text={moments[i].text}
-                hidden={moments[i].hidden}
-                x={moments[i].x * sWidth}
-                y={moments[i].y}
-                scrollPosition={scrollPosition}
-                onDragMove={this.onTextDragMove}
-                onDragStart={this.onTextDragStart}
-                onDragEnd={this.onTextDragEnd}
-                onDblClick={this.onDblClick}
-                onKeyDown={this.onKeyDown}
-                onChange={this.onTextChange}
-                scaleX={1 + moments[i].size * scalingFactor}
-                scaleY={(1 + moments[i].size * scalingFactor) / stageScaleY}
-              />
-            ))}
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2013"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={25}
-            />
+                {[...Array(30)].map(() => {
+                  const starSize = Math.random();
+                  return (
+                    <Star
+                      key={Math.random()}
+                      x={Math.random() * window.innerWidth}
+                      y={Math.random() * this.xHeight * window.innerHeight}
+                      numPoints={5}
+                      innerRadius={10}
+                      outerRadius={20}
+                      scale={{ x: 1.5 - starSize, y: 1.5 / stageScaleY - starSize }}
+                      // scale={{x:1.5 - starSize, y:1.5 - starSize}}
+                      fill="#0269A4"
+                      opacity={0.8}
+                      draggable
+                      shadowColor="black"
+                      shadowBlur={10}
+                      shadowOpacity={0.6}
+                      onDragStart={this.starDragStart}
+                      onDragEnd={this.starDragEnd}
+                    />
+                  );
+                })}
+                <Line x={0} y={0} points={[sWidth / 2, 0, sWidth / 2, window.innerHeight * 5]} stroke="grey" />
+                {moments.map((_, i) => (
+                  <TextMoment
+                    key={moments[i].key}
+                    id={moments[i].key}
+                    text={moments[i].text}
+                    hidden={moments[i].hidden}
+                    x={moments[i].x * sWidth}
+                    y={moments[i].y}
+                    scrollPosition={scrollPosition}
+                    onDragMove={this.onTextDragMove}
+                    onDragStart={this.onTextDragStart}
+                    onDragEnd={this.onTextDragEnd}
+                    onDblClick={this.onDblClick}
+                    onKeyDown={this.onKeyDown}
+                    onChange={this.onTextChange}
+                    scaleX={1 + moments[i].size * scalingFactor}
+                    scaleY={(1 + moments[i].size * scalingFactor) / stageScaleY}
+                  />
+                ))}
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2013"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={25}
+                />
 
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2014"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={525}
-            />
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2014"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={525}
+                />
 
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2015"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={1025}
-            />
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2015"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={1025}
+                />
 
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2016"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={1525}
-            />
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2016"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={1525}
+                />
 
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2017"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={2025}
-            />
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2017"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={2025}
+                />
 
-            <Text
-              ref={ref => {
-                this.testRef = ref;
-              }}
-              text="2018"
-              fill="grey"
-              fontSize={22}
-              scaleY={1 / stageScaleY}
-              x={window.innerWidth / 2 - 60}
-              y={2525}
-            />
-          </Layer>
-          <Layer>
-            <Line
-              absolutePosition={{
-                x: sWidth / 2,
-                y: window.innerHeight - 85,
-              }}
-              points={[0, 0, 0, 85]}
-              stroke="#00000099"
-            />
-            <AddMoment onClick={this.addMoment} scaleY={1 / stageScaleY} />
-          </Layer>
-        </Stage>
+                <Text
+                  ref={ref => {
+                    this.testRef = ref;
+                  }}
+                  text="2018"
+                  fill="grey"
+                  fontSize={22}
+                  scaleY={1 / stageScaleY}
+                  x={window.innerWidth / 2 - 60}
+                  y={2525}
+                />
+              </Layer>
+              <Layer>
+                <Line
+                  absolutePosition={{
+                    x: sWidth / 2,
+                    y: window.innerHeight - 85,
+                  }}
+                  points={[0, 0, 0, 85]}
+                  stroke="#00000099"
+                />
+                <AddMoment onClick={this.addMoment} scaleY={1 / stageScaleY} />
+              </Layer>
+            </Stage>
+          )}
+        </ReactReduxContext.Consumer>
       </div>
     );
   }
