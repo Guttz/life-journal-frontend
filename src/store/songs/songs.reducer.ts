@@ -55,7 +55,7 @@ export default (state = defaultState, action: SongsActionsTypes): SongsInterface
     }
     case ON_UPDATE_SONG: {
       const updatedSong: SongInterface = { ...action.song };
-      const updatedSongs = state.songs.filter(auxSong => auxSong.id != updatedSong.id);
+      const updatedSongs = state.songs.filter(auxSong => auxSong.id !== updatedSong.id);
       return { ...state, lastIndex: state.lastIndex + 1, songs: [...updatedSongs, updatedSong] };
     }
     case ON_DELETE_SONG: {

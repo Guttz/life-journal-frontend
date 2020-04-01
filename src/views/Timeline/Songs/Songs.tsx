@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Konva from 'konva';
 import { Layer } from 'react-konva';
 import SongMoment from './../../../components/SongMoment/SongMoment';
@@ -17,14 +17,12 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
     //setGroupX(e.currentTarget.attrs.x);
     if (updatedSong) {
-      debugger
       updatedSong.x = e.currentTarget.attrs.x;
       updatedSong.y = e.currentTarget.attrs.y;
       updatedSong.importance = (2 * Math.abs(updatedSong.x - window.innerWidth / 2)) / window.innerWidth;
       updateSong(updatedSong);
     }
   };
-  debugger
   return (
     <Layer y={layerY}>
       {songs.map((song: SongInterface) => (

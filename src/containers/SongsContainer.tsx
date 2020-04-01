@@ -1,6 +1,6 @@
 import SongsComponent from '../views/Timeline/Songs/Songs';
 import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch, AnyAction } from 'redux';
+import { Dispatch } from 'redux';
 import { RootState } from '../store/rootState';
 import { SongsActionsTypes } from '../store/songs/songs.actions.types';
 import { SongInterface } from '../store/songs/songs.interfaces';

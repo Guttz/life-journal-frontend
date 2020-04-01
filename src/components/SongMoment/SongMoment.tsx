@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, Ring, Circle, Line, Group, Rect } from 'react-konva';
+import { Text, Image, Ring, Circle, Line, Group } from 'react-konva';
 import { SongInterface } from './../../store/songs/songs.interfaces';
-import Konva from 'konva';
 import useImage from 'use-image';
 
 type Props = {
@@ -35,8 +34,8 @@ const SongMoment: React.FC<SongInterface & Props> = ({
     if (groupAttrsAux.height !== groupAttrs.height) {
       setGroupAttrs(groupAttrsAux);
     }
-  });
-  debugger
+  }, [groupRef, groupAttrs.height]);
+
   return (
     <Group
       x={x}

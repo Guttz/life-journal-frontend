@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import axios from 'axios';
 import NavigationBar from './../NavigationBar/NavigationBar';
@@ -14,7 +14,6 @@ type Props = {
 
 const Home: React.FC<Props> = ({ items = [], createItem = (): void => {}, deleteItem = (): void => {} }) => {
   const [inputDescription, setInputDescription] = useState('');
-  const [spofitySearch, setSpofitySearch] = useState('');
   const [spofitySearchResultList, setSpofitySearchResultList] = useState<any[]>([]);
   const [spofitySearchListSelectedIndex, setSpofitySearchListSelectedIndex] = useState(0);
   const audioRef = React.useRef<HTMLAudioElement>(null);
@@ -76,7 +75,6 @@ const Home: React.FC<Props> = ({ items = [], createItem = (): void => {}, delete
 
       <input
         onChange={(event): void => {
-          setSpofitySearch(event.target.value);
           showSpotifySearchResult(event.target.value);
         }}
       ></input>
@@ -103,7 +101,7 @@ const Home: React.FC<Props> = ({ items = [], createItem = (): void => {}, delete
             audioRef.current?.play();
           }}
         >
-          <img src={item.album.images[2].url}></img>
+          <img alt={item.album.name} src={item.album.images[2].url}></img>
           <li style={{ display: 'inline-block' }}>{item.artists[0].name + ' - ' + item.name}</li>
         </div>
       ))}

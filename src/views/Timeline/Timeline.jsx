@@ -4,7 +4,6 @@ import Konva from 'konva';
 import { Stage, Layer, Star, Text, Line } from 'react-konva';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import Songs from './../../containers/SongsContainer';
-import SongMoment from '../../components/SongMoment/SongMoment';
 import TextMoment from '../../components/TextMoment/TextMoment';
 import AddMoment from '../../components/AddMoment/AddMoment';
 import './Timeline.css';
@@ -115,7 +114,6 @@ class Timeline extends Component {
         Object.assign(updatedMoment, moment);
         updatedMoment.x = this.stageRef.getPointerPosition().x / window.innerWidth;
         updatedMoment.y = this.stageRef.getPointerPosition().y - this.layerRef.y();
-        debugger
         updatedMoment.size = size;
         return updatedMoment;
       }
@@ -348,7 +346,6 @@ class Timeline extends Component {
       scalingFactor,
       layer: { y, scrollPosition },
     } = this.state;
-    debugger
     return (
       <div className="App">
         <NavigationBar />
