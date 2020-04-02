@@ -6,7 +6,7 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 import Songs from './../../containers/SongsContainer';
 import TextMoment from '../../components/TextMoment/TextMoment';
 import AddMoment from '../../components/AddMoment/AddMoment';
-import './Timeline.css';
+import './Timeline.scss';
 
 class Timeline extends Component {
   constructor(props) {
@@ -344,7 +344,7 @@ class Timeline extends Component {
       sHeight,
       moments,
       scalingFactor,
-      layer: { y, scrollPosition },
+      layer: { y, scrollPosition }
     } = this.state;
     return (
       <div className="App">

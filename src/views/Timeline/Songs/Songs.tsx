@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Konva from 'konva';
 import { Layer } from 'react-konva';
 import SongMoment from './../../../components/SongMoment/SongMoment';
+import AddSongs from './AddSongs/AddSongs';
 import { SongInterface } from './../../../store/songs/songs.interfaces';
+import Portal from './../../../components/utils/portal';
+import './Songs.scss';
 
 type Props = {
   lastIndex: number;
@@ -13,6 +16,8 @@ type Props = {
 };
 
 const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong, layerY }) => {
+  const [hideAddSongs, setHideAddSongs] = useState(true);
+
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
     //setGroupX(e.currentTarget.attrs.x);
@@ -25,6 +30,12 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
   };
   return (
     <Layer y={layerY}>
+      <Portal>
+      <button onClick={() => setHideAddSongs(!hideAddSongs)}>AAAAAAAAAAAAAAAAAAAAAAAA</button>
+        <div className="App" id="add-songs-overlay" hidden={hideAddSongs}>
+          <AddSongs insertSong={insertSong} ></AddSongs>
+        </div>
+      </Portal>
       {songs.map((song: SongInterface) => (
         <SongMoment
           key={song.id}
