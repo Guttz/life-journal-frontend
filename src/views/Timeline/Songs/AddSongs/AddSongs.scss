@@ -1,11 +1,9 @@
 .input-container{
   margin-top: 14vh;
   width: 100vw;
-  z-index: 3;
 }
 
 .input-container .song-input {
-  background-color: yellow;
   margin-bottom: 40px;
 }
 
@@ -15,9 +13,7 @@
 }
 
 .exit-overlay{
-  position: fixed;
-  top: 20vh;
-  height: 85vh;
+  height: 100vh;
   width: 100vw;
 }
 
