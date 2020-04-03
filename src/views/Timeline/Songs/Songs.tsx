@@ -40,7 +40,6 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
           AAAAAAAAAAAAAAAAAAAAAAAA
         </button>
         <div
-          className="App"
           id="add-songs-overlay"
           hidden={hideAddSongs}
           onKeyDown={(e: React.KeyboardEvent): void => {

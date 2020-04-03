@@ -76,13 +76,19 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       onKeyDown={(e: React.KeyboardEvent): void => {
         if (e.keyCode === 27) hideAddSongsOverlay();
       }}
-      onClick={(): void => console.log("clickou")}
+      onClick={(): void => console.log('clickou')}
     >
-      <Container className="input-container" onClick={(e): void => {console.log("clickou container"); e.stopPropagation()}}>
+      <Container
+        className="input-container"
+        onClick={(e): void => {
+          console.log('clickou container');
+          e.stopPropagation();
+        }}
+      >
         <Row>
           <Col></Col>
           <Col sm="12" md={9}>
-            <InputGroup>
+            <InputGroup className="song-input">
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>♫</InputGroupText>
               </InputGroupAddon>
@@ -93,45 +99,60 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                 placeholder="Search for your hit song here..."
               />
             </InputGroup>
+
+            {/*       <Button color="primary" onClick={(): void => aud_play_pause()}>
+        playpause
+      </Button> */}
+
+            {spofitySearchResultList.map((item, i) => {
+              return (
+                <Row
+                  className="spotify-list-result align-items-center"
+                  key={i}
+                  onMouseOver={() => {
+                    setSpofitySearchListSelectedIndex(i);
+                    audioRef.current?.pause();
+                    audioRef.current?.load();
+                    audioRef.current?.play();
+                  }}
+                >
+                  <img alt={item.album.name} src={item.album.images[2].url}></img>
+                  <div>
+                    <li className="title">{item.name}</li>
+                    <li className="artists">
+                      {item.artists
+                        .map((item: { name: any }) => item.name)
+                        .toString()
+                        .replace(/,/g, ', ')}
+                    </li>
+                  </div>
+                  <a className="btn btn-small" onClick={() => insertSong(formatSong(item))} href="#">
+                    <i className="fas fa-play fa-lg"></i>
+                  </a>
+                  <a className="btn btn-small" onClick={() => insertSong(formatSong(item))} href="#">
+                    <i className="fas fa-plus fa-lg"></i>
+                  </a>
+                </Row>
+              );
+            })}
+
+            {spofitySearchResultList[spofitySearchListSelectedIndex] && (
+              <div hidden={true}>
+                <span>{spofitySearchResultList[spofitySearchListSelectedIndex].name}</span>
+                <audio ref={audioRef} controls muted>
+                  <source
+                    src={spofitySearchResultList[spofitySearchListSelectedIndex].preview_url}
+                    type="audio/mpeg"
+                  ></source>
+                  Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
+                </audio>
+              </div>
+            )}
+            <div className="exit-overlay" onClick={(): void => hideAddSongsOverlay()}></div>
           </Col>
           <Col></Col>
         </Row>
       </Container>
-{/*       <Button color="primary" onClick={(): void => aud_play_pause()}>
-        playpause
-      </Button> */}
-
-      {spofitySearchResultList[spofitySearchListSelectedIndex] && (
-        <div>
-          <span>{spofitySearchResultList[spofitySearchListSelectedIndex].name}</span>
-          <audio ref={audioRef} controls muted>
-            <source
-              src={spofitySearchResultList[spofitySearchListSelectedIndex].preview_url}
-              type="audio/mpeg"
-            ></source>
-            Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
-          </audio>
-        </div>
-      )}
-      <div className="exit-overlay" onClick={(): void => hideAddSongsOverlay()}></div>
-
-      {spofitySearchResultList.map((item, i) => (
-        <div
-          key={i}
-          onMouseOver={() => {
-            setSpofitySearchListSelectedIndex(i);
-            audioRef.current?.pause();
-            audioRef.current?.load();
-            audioRef.current?.play();
-          }}
-        >
-          <img alt={item.album.name} src={item.album.images[2].url}></img>
-          <li style={{ display: 'inline-block' }}>{item.artists[0].name + ' - ' + item.name}</li>
-          <a className="btn btn-small" onClick={() => insertSong(formatSong(item))} href="#">
-            <i className="fas fa-plus fa-lg"></i>
-          </a>
-        </div>
-      ))}
     </div>
   );
 };
