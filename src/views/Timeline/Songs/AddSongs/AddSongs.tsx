@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import axios from 'axios';
-import Memory from './../../../../models/MemoryModel';
+import { Container, Row, Col, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import { SongInterface } from './../../../../store/songs/songs.interfaces';
+import './AddSongs.scss';
 
 type Props = {
   insertSong: (song: SongInterface) => void;
+  hideAddSongsOverlay: () => void;
 };
 
-const AddSongs: React.FC<Props> = ({ insertSong = (): void => {}}) => {
+const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
   const [spofitySearchResultList, setSpofitySearchResultList] = useState<any[]>([]);
   const [spofitySearchListSelectedIndex, setSpofitySearchListSelectedIndex] = useState(0);
   const audioRef = React.useRef<HTMLAudioElement>(null);
@@ -52,8 +54,8 @@ const AddSongs: React.FC<Props> = ({ insertSong = (): void => {}}) => {
       previewURL: spotifySongResult.preview_url,
       imageURL: formattedImageURL,
       importance: spotifySongResult.popularity,
-      x: 300,
-      y: 300,
+      x: 500,
+      y: 500,
     };
     debugger;
     return newSong;
@@ -69,15 +71,35 @@ const AddSongs: React.FC<Props> = ({ insertSong = (): void => {}}) => {
   }
 
   return (
-    <div>
-      <input
-        onChange={(event): void => {
-          showSpotifySearchResult(event.target.value);
-        }}
-      ></input>
-      <Button color="primary" onClick={(): void => aud_play_pause()}>
+    <div
+      className="input-section"
+      onKeyDown={(e: React.KeyboardEvent): void => {
+        if (e.keyCode === 27) hideAddSongsOverlay();
+      }}
+      onClick={(): void => console.log("clickou")}
+    >
+      <Container className="input-container" onClick={(e): void => {console.log("clickou container"); e.stopPropagation()}}>
+        <Row>
+          <Col></Col>
+          <Col sm="12" md={9}>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>♫</InputGroupText>
+              </InputGroupAddon>
+              <Input
+                onChange={(event): void => {
+                  showSpotifySearchResult(event.target.value);
+                }}
+                placeholder="Search for your hit song here..."
+              />
+            </InputGroup>
+          </Col>
+          <Col></Col>
+        </Row>
+      </Container>
+{/*       <Button color="primary" onClick={(): void => aud_play_pause()}>
         playpause
-      </Button>
+      </Button> */}
 
       {spofitySearchResultList[spofitySearchListSelectedIndex] && (
         <div>
@@ -91,6 +113,7 @@ const AddSongs: React.FC<Props> = ({ insertSong = (): void => {}}) => {
           </audio>
         </div>
       )}
+      <div className="exit-overlay" onClick={(): void => hideAddSongsOverlay()}></div>
 
       {spofitySearchResultList.map((item, i) => (
         <div

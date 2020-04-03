@@ -16,7 +16,7 @@ type Props = {
 };
 
 const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong, layerY }) => {
-  const [hideAddSongs, setHideAddSongs] = useState(true);
+  const [hideAddSongs, setHideAddSongs] = useState(false);
 
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
@@ -31,9 +31,24 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
   return (
     <Layer y={layerY}>
       <Portal>
-      <button onClick={() => setHideAddSongs(!hideAddSongs)}>AAAAAAAAAAAAAAAAAAAAAAAA</button>
-        <div className="App" id="add-songs-overlay" hidden={hideAddSongs}>
-          <AddSongs insertSong={insertSong} ></AddSongs>
+        <button
+          onClick={() => setHideAddSongs(!hideAddSongs)}
+          onKeyDown={(e: React.KeyboardEvent): void => {
+            if (e.keyCode === 27) setHideAddSongs(true);
+          }}
+        >
+          AAAAAAAAAAAAAAAAAAAAAAAA
+        </button>
+        <div
+          className="App"
+          id="add-songs-overlay"
+          hidden={hideAddSongs}
+          onKeyDown={(e: React.KeyboardEvent): void => {
+            if (e.keyCode === 27) setHideAddSongs(true);
+          }}
+          /* onClick={(): void => setHideAddSongs(true)} */
+        >
+          <AddSongs insertSong={insertSong} hideAddSongsOverlay={(): void => setHideAddSongs(true)}></AddSongs>
         </div>
       </Portal>
       {songs.map((song: SongInterface) => (
