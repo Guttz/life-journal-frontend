@@ -53,7 +53,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       timelineDate: new Date(spotifySongResult.album.release_date),
       previewURL: spotifySongResult.preview_url,
       imageURL: formattedImageURL,
-      importance: spotifySongResult.popularity,
+      importance: spotifySongResult.popularity / 100,
       x: 500,
       y: 500,
     };
@@ -106,16 +106,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
 
             {spofitySearchResultList.map((item, i) => {
               return (
-                <Row
-                  className="spotify-list-result align-items-center"
-                  key={i}
-                  onMouseOver={() => {
-                    setSpofitySearchListSelectedIndex(i);
-                    audioRef.current?.pause();
-                    audioRef.current?.load();
-                    audioRef.current?.play();
-                  }}
-                >
+                <Row className="spotify-list-result align-items-center" key={i}>
                   <img alt={item.album.name} src={item.album.images[2].url}></img>
                   <div>
                     <li className="title">{item.name}</li>
@@ -126,10 +117,36 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                         .replace(/,/g, ', ')}
                     </li>
                   </div>
-                  <a className="btn btn-small" onClick={() => insertSong(formatSong(item))} href="#">
-                    <i className="fas fa-play fa-lg"></i>
-                  </a>
-                  <a className="btn btn-small" onClick={() => insertSong(formatSong(item))} href="#">
+                  {item.preview_url ? (
+                    <a
+                      className="btn btn-small"
+                      onClick={() => {
+                        setSpofitySearchListSelectedIndex(i);
+                        debugger
+                        if (!audioRef.current?.paused && audioRef.current?.currentSrc === item.preview_url) {
+                          audioRef.current?.pause();
+                        } else {
+                          audioRef.current?.pause();
+                          audioRef.current?.load();
+                          audioRef.current?.play();
+                        }
+                      }}
+                      href="#"
+                    >
+                      <i className="fas fa-play fa-lg"></i>
+                    </a>
+                  ) : (
+                    <a className="btn btn-small" style={{ color: 'transparent' }}>
+                      <i className="fas fa-play fa-lg"></i>
+                    </a>
+                  )}
+                  <a
+                    className="btn btn-small"
+                    onClick={() => {
+                      insertSong(formatSong(item));
+                    }}
+                    href="#"
+                  >
                     <i className="fas fa-plus fa-lg"></i>
                   </a>
                 </Row>
@@ -139,7 +156,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
             {spofitySearchResultList[spofitySearchListSelectedIndex] && (
               <div hidden={true}>
                 <span>{spofitySearchResultList[spofitySearchListSelectedIndex].name}</span>
-                <audio ref={audioRef} controls muted>
+                <audio ref={audioRef} controls>
                   <source
                     src={spofitySearchResultList[spofitySearchListSelectedIndex].preview_url}
                     type="audio/mpeg"

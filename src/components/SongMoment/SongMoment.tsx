@@ -28,7 +28,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   const imgPixels = 64;
   const [groupAttrs, setGroupAttrs] = useState({ x: 0, y: 0, width: 0, height: 0 });
   let groupRef: any = React.createRef();
-
+  debugger
   useEffect(() => {
     const groupAttrsAux: any = groupRef.getClientRect();
     if (groupAttrsAux.height !== groupAttrs.height) {
@@ -37,6 +37,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   }, [groupRef, groupAttrs.height]);
 
   return (
+    
     <Group
       x={x}
       y={y}

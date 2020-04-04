@@ -54,7 +54,7 @@ class Timeline extends Component {
   componentDidMount() {
     this.stageRef.container().style.cursor = 'pointer';
 
-    const moments = [...Array(20)].map((_, i) => {
+    const moments = [...Array(0)].map((_, i) => {
       const xPosition = Math.random() * (0.8 - 0.2) + 0.2;
       const newMoment = {
         key: i,

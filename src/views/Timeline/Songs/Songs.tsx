@@ -37,7 +37,7 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
             if (e.keyCode === 27) setHideAddSongs(true);
           }}
         >
-          AAAAAAAAAAAAAAAAAAAAAAAA
+          Add Song
         </button>
         <div
           id="add-songs-overlay"
