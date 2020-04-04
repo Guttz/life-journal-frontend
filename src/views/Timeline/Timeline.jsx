@@ -362,9 +362,6 @@ class Timeline extends Component {
               width={sWidth}
               height={sHeight * 1}
             >
-              <Provider store={store}>
-                <Songs layerY={y}></Songs>
-              </Provider>
               <Layer
                 ref={ref => {
                   this.layerRef = ref;
@@ -495,8 +492,11 @@ class Timeline extends Component {
                   points={[0, 0, 0, 85]}
                   stroke="#00000099"
                 />
-                <AddMoment onClick={this.addMoment} scaleY={1 / stageScaleY} />
+                {/* <AddMoment onClick={this.addMoment} scaleY={1 / stageScaleY} /> */}
               </Layer>
+              <Provider store={store}>
+                <Songs layerY={y}></Songs>
+              </Provider>
             </Stage>
           )}
         </ReactReduxContext.Consumer>

@@ -3,6 +3,7 @@ import Konva from 'konva';
 import { Layer } from 'react-konva';
 import SongMoment from './../../../components/SongMoment/SongMoment';
 import AddSongs from './AddSongs/AddSongs';
+import AddMoment from '../../../components/AddMoment/AddMoment';
 import { SongInterface } from './../../../store/songs/songs.interfaces';
 import Portal from './../../../components/utils/portal';
 import './Songs.scss';
@@ -33,7 +34,7 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
   return (
     <Layer y={layerY}>
       <Portal>
-        <audio ref={audioRef} controls>
+        <audio ref={audioRef}>
           <source src={selectedSong?.previewURL} type="audio/mpeg"></source>
           Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
         </audio>
@@ -78,6 +79,7 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
           onDblClick={() => {}}
         />
       ))}
+      <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />
     </Layer>
   );
 };
