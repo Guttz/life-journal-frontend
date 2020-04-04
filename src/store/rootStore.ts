@@ -18,7 +18,6 @@ export default function configureStore() {
     if (new Date().getTime() - throttleTime > 1000) {
       throttleTime = new Date().getTime();
       saveState(store.getState());
-      debugger
     }
   });
 

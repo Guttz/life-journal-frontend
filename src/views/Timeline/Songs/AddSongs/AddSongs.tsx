@@ -57,7 +57,6 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       x: 500,
       y: 500,
     };
-    debugger;
     return newSong;
   };
 
@@ -122,7 +121,6 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                       className="btn btn-small"
                       onClick={() => {
                         setSpofitySearchListSelectedIndex(i);
-                        debugger
                         if (!audioRef.current?.paused && audioRef.current?.currentSrc === item.preview_url) {
                           audioRef.current?.pause();
                         } else {

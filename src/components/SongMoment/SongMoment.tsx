@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Text, Image, Ring, Circle, Line, Group } from 'react-konva';
 import { SongInterface } from './../../store/songs/songs.interfaces';
 import useImage from 'use-image';
+import Konva from 'konva';
 
 type Props = {
+  onClick(event: Konva.KonvaEventObject<MouseEvent>): void;
   onDragStart(event: any): void;
   onDragMove(event: any): void;
   onDragEnd(event: any): void;
@@ -19,6 +21,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   importance,
   x,
   y,
+  onClick,
   onDragStart,
   onDragMove,
   onDragEnd,
@@ -28,7 +31,6 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   const imgPixels = 64;
   const [groupAttrs, setGroupAttrs] = useState({ x: 0, y: 0, width: 0, height: 0 });
   let groupRef: any = React.createRef();
-  debugger
   useEffect(() => {
     const groupAttrsAux: any = groupRef.getClientRect();
     if (groupAttrsAux.height !== groupAttrs.height) {
@@ -37,10 +39,10 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   }, [groupRef, groupAttrs.height]);
 
   return (
-    
     <Group
       x={x}
       y={y}
+      onClick={onClick}
       onDragStart={onDragStart}
       onDragMove={onDragMove}
       onDragEnd={onDragEnd}

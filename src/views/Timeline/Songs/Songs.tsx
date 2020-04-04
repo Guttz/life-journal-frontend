@@ -16,7 +16,9 @@ type Props = {
 };
 
 const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong, layerY }) => {
-  const [hideAddSongs, setHideAddSongs] = useState(false);
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [hideAddSongs, setHideAddSongs] = useState(true);
+  const [selectedSong, setSelectedSong] = useState<SongInterface | null>(null);
 
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
@@ -31,6 +33,10 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
   return (
     <Layer y={layerY}>
       <Portal>
+        <audio ref={audioRef} controls>
+          <source src={selectedSong?.previewURL} type="audio/mpeg"></source>
+          Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
+        </audio>
         <button
           onClick={() => setHideAddSongs(!hideAddSongs)}
           onKeyDown={(e: React.KeyboardEvent): void => {
@@ -54,6 +60,16 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
         <SongMoment
           key={song.id}
           {...song}
+          onClick={(): void => {
+            setSelectedSong(song);
+            if (!audioRef.current?.paused && audioRef.current?.currentSrc === song.previewURL) {
+              audioRef.current?.pause();
+            } else {
+              audioRef.current?.pause();
+              audioRef.current?.load();
+              audioRef.current?.play();
+            }
+          }}
           onDragStart={() => {}}
           onDragMove={(e: Konva.KonvaEventObject<DragEvent>): void => onDragMove(e, song.id)}
           onDragEnd={() => {
