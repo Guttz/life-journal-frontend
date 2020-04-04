@@ -44,6 +44,7 @@
 //   }
 
 //   componentDidMount() {
+//     stageRef.container().style.cursor = 'pointer';
 
 //     const moments = [...Array(40)].map((_, i) => {
 //       const xPosition = Math.random() * (0.8 - 0.2) + 0.2;

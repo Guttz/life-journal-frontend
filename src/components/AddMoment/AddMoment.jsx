@@ -1,9 +1,6 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Image,
-} from 'react-konva';
+import { Image } from 'react-konva';
 import useImage from 'use-image';
 
 const AddMoment = ({ onClick, scaleY }) => {
@@ -11,12 +8,10 @@ const AddMoment = ({ onClick, scaleY }) => {
   return (
     <Image
       onClick={onClick}
-      absolutePosition={
-      {
+      absolutePosition={{
         x: window.innerWidth / 2 - 33,
         y: window.innerHeight - 85,
-      }
-}
+      }}
       width={66}
       height={66}
       scaleY={scaleY}
