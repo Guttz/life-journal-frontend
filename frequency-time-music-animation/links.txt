@@ -1,0 +1,13 @@
+https://stackoverflow.com/questions/43867902/web-audio-analyze-entire-buffer
+
+INSPIRATION - https://codepen.io/ma77os/full/spekH
+
+https://www.youtube.com/watch?v=p0Fv9CX1FGc
+
+https://mdn.github.io/voice-change-o-matic/
+https://github.com/mdn/voice-change-o-matic/blob/gh-pages/scripts/app.js
+
+https://stackoverflow.com/questions/22073716/create-a-waveform-of-the-full-track-with-web-audio-api
+
+-- waveform
+https://stackoverflow.com/questions/22073716/create-a-waveform-of-the-full-track-with-web-audio-api

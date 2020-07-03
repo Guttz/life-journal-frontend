@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Static Template</title>
+
+    
+  </head>
+  <body>
+    <h1>This is a static template, there is no bundler or bundling involved!</h1>
+    <button onclick="loadMusic('https://p.scdn.co/mp3-preview/819980211c2d492dfdce4967df6176f86c2023f2?cid=21dbe53cbabe4f03b2ad3090342a7bbc')">Play</button>
+  </body>
+
+  <script>
+        // AUDIO CONTEXT
+    window.AudioContext = window.AudioContext || window.webkitAudioContext ;
+
+    if (!AudioContext) alert('This site cannot be run in your Browser. Try a recent Chrome or Firefox. ');
+
+    var audioContext = new AudioContext();
+    var bufferSource = audioContext.createBufferSource(); // creates a sound source
+    //var streamSource = audioContext.createMedia createMediaStreamSource
+    // CANVAS
+    var canvasWidth = 512,  canvasHeight = 120 ;
+    var newCanvas   = createCanvas (canvasWidth, canvasHeight);
+    var context     = null;
+
+    var waveAnalyser = audioContext.createAnalyser();
+    waveAnalyser.fftSize = 256;
+
+    var dataArray = new Uint8Array(waveAnalyser.frequencyBinCount);
+
+    window.onload = appendCanvas;
+    function appendCanvas() { document.body.appendChild(newCanvas);
+                              context = newCanvas.getContext('2d'); }
+
+    // MUSIC LOADER + DECODE
+    function loadMusic(url) {   
+        var req = new XMLHttpRequest();
+        req.open( "GET", url, true );
+        req.responseType = "arraybuffer";    
+        req.onreadystatechange = function (e) {
+              if (req.readyState == 4) {
+                if(req.status == 200)
+                      audioContext.decodeAudioData(req.response, 
+                        function(buffer) {
+                                console.log("bufferizado")
+                                //displayBuffer(buffer);
+                                bufferSource.buffer = buffer;             // tell the source which sound to play
+                                //bufferSource.connect(audioContext.destination);     // connect the source to the context's destination (the speakers)
+                                bufferSource.connect(waveAnalyser)
+                                waveAnalyser.connect(audioContext.destination);
+                                //bufferSource.start(0);
+
+                                var offline = new OfflineAudioContext(2, buffer.length ,44100);
+                                var bufferSourceOf = offline.createBufferSource();
+                                bufferSourceOf.buffer = buffer;
+
+                                var analyser = offline.createAnalyser();
+                                var scp = offline.createScriptProcessor(256, 0, 1);
+
+                                bufferSourceOf.connect(analyser);
+                                analyser.connect(scp);
+                                scp.connect(offline.destination); // this is necessary for the script processor to start 
+                                var freqData = new Uint8Array(analyser.frequencyBinCount);
+                                scp.onaudioprocess = function(){
+                                  analyser.getByteFrequencyData(freqData);
+                                  console.log(freqData);
+                                  analyser.getByteTimeDomainData(freqData);
+                                  console.log(freqData);
+                                };
+                                bufferSourceOf.start(0);
+                                
+                                offline.oncomplete = function(e){
+                                  console.log('analysed');
+                                  bufferSource.start(0);
+                                };
+                                offline.startRendering();
+  
+                        }, onDecodeError);
+                else
+                      alert('error during the load.Wrong url or cross origin issue');
+              }
+        } ;
+        req.send();
+    }
+    function onDecodeError() {  alert('error while decoding your file.');  }
+
+    // MUSIC DISPLAY
+    function displayBuffer(buff /* is an AudioBuffer */) {
+      var leftChannel = buff.getChannelData(0); // Float32Array describing left channel     
+      var lineOpacity = canvasWidth / leftChannel.length  ;      
+      context.save();
+      context.fillStyle = '#222' ;
+      context.fillRect(0,0,canvasWidth,canvasHeight );
+      context.strokeStyle = '#121';
+      context.globalCompositeOperation = 'lighter';
+      context.translate(0,canvasHeight / 2);
+      context.globalAlpha = 0.06 ; // lineOpacity ;
+      for (var i=0; i<  leftChannel.length; i++) {
+          // on which line do we get ?
+          var x = Math.floor ( canvasWidth * i / leftChannel.length ) ;
+          var y = leftChannel[i] * canvasHeight / 2 ;
+          context.beginPath();
+          context.moveTo( x  , 0 );
+          context.lineTo( x+1, y );
+          context.stroke();
+      }
+      context.restore();
+      console.log('done');
+    }
+
+    function createCanvas ( w, h ) {
+        var newCanvas = document.createElement('canvas');
+        newCanvas.width  = w;     newCanvas.height = h;
+        return newCanvas;
+    };
+
+    
+    //loadMusic('https://p.scdn.co/mp3-preview/4cbfbacca920ba829cea65b6061c5e9d6de99a72?cid=21dbe53cbabe4f03b2ad3090342a7bbc');
+
+  </script>
+  
+  </html>
+
