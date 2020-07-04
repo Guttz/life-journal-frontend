@@ -1,4 +1,4 @@
-import { ON_INSERT_SONG, ON_UPDATE_SONG, ON_DELETE_SONG } from './songs.actions';
+import { ON_INSERT_SONG, ON_UPDATE_SONG, ON_DELETE_SONG, ON_SET_SONGS } from './songs.actions';
 import { SongInterface, SongsInterface } from './songs.interfaces';
 import { SongsActionsTypes } from './songs.actions.types';
 
@@ -44,8 +44,6 @@ const defaultState: SongsInterface = {
   ],
 };
 
-
-
 // [Question] Defining return type of a whole reducer/state aprt
 export default (state = defaultState, action: SongsActionsTypes): SongsInterface => {
   switch (action.type) {
@@ -64,7 +62,9 @@ export default (state = defaultState, action: SongsActionsTypes): SongsInterface
     case ON_DELETE_SONG: {
       return { ...state, songs: [...state.songs.slice(0, action.id), ...state.songs.slice(action.id + 1)] };
     }
-
+    case ON_SET_SONGS: {
+      return { ...state, songs: action.songs };
+    }
     default:
       return state;
   }

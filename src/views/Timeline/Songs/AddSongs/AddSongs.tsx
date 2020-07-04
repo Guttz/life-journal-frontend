@@ -18,9 +18,13 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
   async function showSpotifySearchResult(spofitySearchTerm: string) {
     console.log(spofitySearchTerm);
     const response = await axios.request({
-      method: 'get',
-      url: 'http://localhost:3001/spotify-search',
-      params: {
+      method: 'post',
+      url: 'http://localhost:4001/spotify/spotify-search',
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzODc0OTI5LCJleHAiOjE1OTM5NjEzMjl9.3BbCx4LQ0abG64y7fe1L1eym9Yj3XQbmEJCcl4EmsNE',
+      },
+      data: {
         queryTerm: spofitySearchTerm,
       },
     });

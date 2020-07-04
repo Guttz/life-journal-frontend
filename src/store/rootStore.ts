@@ -3,6 +3,7 @@ import { saveState, loadState } from './../utils/localStorage';
 
 // Logger with default options
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import { rootReducer } from './rootState';
 

@@ -5,6 +5,7 @@ import { SongInterface } from './songs.interfaces';
 export const ON_INSERT_SONG = 'ON_INSERT_SONG';
 export const ON_UPDATE_SONG = 'ON_UPDATE_SONG';
 export const ON_DELETE_SONG = 'ON_DELETE_SONG';
+export const ON_SET_SONGS = 'ON_SET_SONGS';
 
 type InsertSongType = (song: SongInterface) => SongsActionsTypes;
 type DeleteSongType = (id: number) => SongsActionsTypes;
@@ -24,8 +25,14 @@ const DeleteSong = (id: number): SongsActionsTypes => ({
   id: id,
 });
 
+const SetSongs = (songs: Array<SongInterface>): SongsActionsTypes => ({
+  type: ON_SET_SONGS,
+  songs: songs,
+});
+
 export default {
   InsertSong,
   UpdateSong,
   DeleteSong,
+  SetSongs,
 };
