@@ -5,8 +5,9 @@ import { RootState } from '../store/rootState';
 import { SongsActionsTypes } from '../store/songs/songs.actions.types';
 import { SongInterface } from '../store/songs/songs.interfaces';
 import SongActions from '../store/songs/songs.actions';
+import { InsertSong } from '../store/songs/songs.thunks';
 
-// Create props type here and import in the component 
+// Create props type here and import in the component
 
 const mapStateToProps = (state: RootState, props: { layerY: number }): any => {
   return {

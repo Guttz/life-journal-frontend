@@ -61,6 +61,40 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       x: 500,
       y: 500,
     };
+
+    // Temporary solution to not yet having the ID
+    const newSongNoID: any = {
+      name: spotifySongResult.name,
+      artists: formattedArtistsArray,
+      timelineDate: new Date(spotifySongResult.album.release_date),
+      previewURL: spotifySongResult.preview_url,
+      imageURL: formattedImageURL,
+      importance: spotifySongResult.popularity / 100,
+      x: 500,
+      y: 500,
+    };
+
+    // This should be at the store level
+    axios
+      .post(
+        'http://localhost:4001/song/insertSong',
+        {
+          song: JSON.stringify(newSongNoID),
+        },
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzODc0OTI5LCJleHAiOjE1OTM5NjEzMjl9.3BbCx4LQ0abG64y7fe1L1eym9Yj3XQbmEJCcl4EmsNE',
+          },
+        },
+      )
+      .then(
+        (response): any => {
+          console.log(response);
+        },
+        error => console.log(error),
+      );
+
     return newSong;
   };
 
