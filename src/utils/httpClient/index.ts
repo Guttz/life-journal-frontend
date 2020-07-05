@@ -8,11 +8,11 @@ export default class HTTPClient {
   private readonly axiosInstance: AxiosInstance;
 
   constructor() {
-    this.domain = process.env.HOST ? process.env.HOST : 'http://localhost:4000';
+    this.domain = process.env.REACT_APP_BACK_HOST ? process.env.REACT_APP_BACK_HOST : 'http://localhost:4000';
 
     // [Dev] Temporarily setting the JWT token
     setItem(
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzODc0OTI5LCJleHAiOjE1OTM5NjEzMjl9.3BbCx4LQ0abG64y7fe1L1eym9Yj3XQbmEJCcl4EmsNE',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzOTY5NDIyLCJleHAiOjE1OTQwNTU4MjJ9.rA_9eVrDwSY1E7K1M7xVIXM1bvdHf-N8IpaF4Cus_X0',
     );
 
     this.axiosInstance = axios.create({

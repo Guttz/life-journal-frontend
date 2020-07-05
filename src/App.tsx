@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -7,7 +8,6 @@ import Timeline from './containers/Timeline';
 import Page404 from './views/Pages/Page404/Page404';
 import logo from './logo.svg';
 import './App.scss';
-
 const store = configureStore();
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 

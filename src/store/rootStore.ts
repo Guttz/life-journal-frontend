@@ -11,7 +11,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export default function configureStore() {
   const persistedState = loadState();
-  const store = createStore(rootReducer, persistedState, applyMiddleware(logger));
+  const store = createStore(rootReducer, persistedState, applyMiddleware(logger, thunk));
 
   let throttleTime = new Date().getTime();
 
