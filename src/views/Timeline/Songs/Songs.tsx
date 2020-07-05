@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Konva from 'konva';
 import { Layer } from 'react-konva';
 import SongMoment from './../../../components/SongMoment/SongMoment';
@@ -12,14 +12,21 @@ type Props = {
   lastIndex: number;
   layerY: number;
   songs: Array<SongInterface>;
+  fetchSongs: () => void;
   insertSong: (song: SongInterface) => void;
   updateSong: (song: SongInterface) => void;
+  updateSongLocal: (song: SongInterface) => void;
 };
 
-const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateSong, layerY }) => {
+const SongsComponent: React.FC<Props> = ({ songs, fetchSongs, insertSong, updateSong, updateSongLocal, layerY }) => {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [hideAddSongs, setHideAddSongs] = useState(true);
   const [selectedSong, setSelectedSong] = useState<SongInterface | null>(null);
+
+  useEffect(() => {
+    // Fetching Songs from Database
+    fetchSongs();
+  }, []);
 
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
@@ -28,9 +35,15 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
       updatedSong.x = e.currentTarget.attrs.x;
       updatedSong.y = e.currentTarget.attrs.y;
       updatedSong.importance = (2 * Math.abs(updatedSong.x - window.innerWidth / 2)) / window.innerWidth;
-      updateSong(updatedSong);
+      updateSongLocal(updatedSong);
     }
   };
+
+  const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
+    const updatedSong = songs.find(auxSong => auxSong.id === songID);
+    if (updatedSong) updateSong(updatedSong);
+  };
+
   return (
     <Layer y={layerY}>
       <Portal>
@@ -73,9 +86,7 @@ const SongsComponent: React.FC<Props> = ({ lastIndex, songs, insertSong, updateS
           }}
           onDragStart={() => {}}
           onDragMove={(e: Konva.KonvaEventObject<DragEvent>): void => onDragMove(e, song.id)}
-          onDragEnd={() => {
-            console.log('parou');
-          }}
+          onDragEnd={(e: Konva.KonvaEventObject<DragEvent>): void => onDragEnd(e, song.id)}
           onDblClick={() => {}}
         />
       ))}
