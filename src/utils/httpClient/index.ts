@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import fetch from 'isomorphic-unfetch';
 
-import { getItem, setItem } from '../../utils/localStorage';
+import { getToken, setToken } from '../../utils/localStorage';
 
 export default class HTTPClient {
   private readonly domain: string;
@@ -11,8 +11,8 @@ export default class HTTPClient {
     this.domain = process.env.REACT_APP_BACK_HOST ? process.env.REACT_APP_BACK_HOST : 'http://localhost:4000';
 
     // [Dev] Temporarily setting the JWT token
-    setItem(
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzOTY5NDIyLCJleHAiOjE1OTQwNTU4MjJ9.rA_9eVrDwSY1E7K1M7xVIXM1bvdHf-N8IpaF4Cus_X0',
+    setToken(
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTk0NDE1ODgzLCJleHAiOjE1OTQ1MDIyODN9.sgJHFvo_xaLIS9JvJ7KIbzz31Ilkujm2dPLrnDv-brw',
     );
 
     this.axiosInstance = axios.create({
@@ -30,7 +30,7 @@ export default class HTTPClient {
   }
 
   async delete<T>(url: string): Promise<T> {
-    const token = getItem();
+    const token = getToken();
     return await this.axiosInstance.delete(url, {
       headers: {
         Authorization: token,
@@ -39,7 +39,7 @@ export default class HTTPClient {
   }
 
   async post<T>(url: string, data: {}): Promise<T> {
-    const token = getItem();
+    const token = getToken();
     return await this.axiosInstance.post(url, data, {
       headers: {
         Authorization: token,

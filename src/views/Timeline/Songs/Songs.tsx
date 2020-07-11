@@ -41,7 +41,12 @@ const SongsComponent: React.FC<Props> = ({ songs, fetchSongs, insertSong, update
 
   const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
-    if (updatedSong) updateSong(updatedSong);
+    if (updatedSong) {
+      updatedSong.x = e.currentTarget.attrs.x;
+      updatedSong.y = e.currentTarget.attrs.y;
+      updatedSong.importance = (2 * Math.abs(updatedSong.x - window.innerWidth / 2)) / window.innerWidth;
+      updateSong(updatedSong);
+    }
   };
 
   return (

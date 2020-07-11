@@ -22,7 +22,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       url: 'http://localhost:4001/spotify/spotify-search',
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTkzOTY5NDIyLCJleHAiOjE1OTQwNTU4MjJ9.rA_9eVrDwSY1E7K1M7xVIXM1bvdHf-N8IpaF4Cus_X0',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTk0NDE1ODgzLCJleHAiOjE1OTQ1MDIyODN9.sgJHFvo_xaLIS9JvJ7KIbzz31Ilkujm2dPLrnDv-brw',
       },
       data: {
         queryTerm: spofitySearchTerm,

@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import LoginModal from './Login/LoginModal';
 
 const NavigationBar: React.FC = props => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +44,7 @@ const NavigationBar: React.FC = props => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
+          <LoginModal buttonLabel="Login"></LoginModal>
         </Collapse>
       </Navbar>
     </div>

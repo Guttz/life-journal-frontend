@@ -10,8 +10,8 @@ import { rootReducer } from './rootState';
 export type RootState = ReturnType<typeof rootReducer>;
 
 export default function configureStore() {
-  const persistedState = loadState();
-  const store = createStore(rootReducer, persistedState, applyMiddleware(logger, thunk));
+  //const persistedState = loadState();
+  const store = createStore(rootReducer, {}, applyMiddleware(logger, thunk));
 
   let throttleTime = new Date().getTime();
 

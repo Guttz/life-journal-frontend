@@ -19,10 +19,10 @@ export const saveState = (state: any): void => {
   }
 };
 
-export const getItem = (): any => {
+export const getToken = (): any => {
   return localStorage.getItem('token');
 };
 
-export const setItem = (value: string): void => {
+export const setToken = (value: string): void => {
   localStorage.setItem('token', value);
 };
