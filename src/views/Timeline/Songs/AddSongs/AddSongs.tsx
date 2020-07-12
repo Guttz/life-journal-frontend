@@ -20,8 +20,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
     const request = http.post<any>('/spotify/spotify-search', { queryTerm: spofitySearchTerm });
     request.then(
       response => {
-        const spofitySearchResultListAux = response.data.tracks.items.map((item: any, index: number) => {
-          console.log(item);
+        const spofitySearchResultListAux = response.data.tracks.items.map((item: object) => {
           return item;
         });
         setSpofitySearchResultList(spofitySearchResultListAux);
@@ -30,6 +29,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
     );
   }
 
+  // Using any due to spotify API response
   const formatSong = (spotifySongResult: any): SongInterface => {
     const formattedArtistsArray = [];
     for (const key in spotifySongResult.artists) formattedArtistsArray.push(spotifySongResult.artists[key].name);
@@ -72,12 +72,10 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       onKeyDown={(e: React.KeyboardEvent): void => {
         if (e.keyCode === 27) hideAddSongsOverlay();
       }}
-      onClick={(): void => console.log('clickou')}
     >
       <Container
         className="input-container"
         onClick={(e): void => {
-          console.log('clickou container');
           e.stopPropagation();
         }}
       >
@@ -108,7 +106,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                     <li className="title">{item.name}</li>
                     <li className="artists">
                       {item.artists
-                        .map((item: { name: any }) => item.name)
+                        .map((item: { name: string }) => item.name)
                         .toString()
                         .replace(/,/g, ', ')}
                     </li>
@@ -136,7 +134,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                   )}
                   <button
                     className="btn btn-small"
-                    onClick={() => {
+                    onClick={(): void => {
                       insertSong(formatSong(item));
                     }}
                   >

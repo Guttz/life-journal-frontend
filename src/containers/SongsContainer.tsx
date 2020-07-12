@@ -17,10 +17,10 @@ const mapStateToProps = (state: RootState, props: { layerY: number }): StateProp
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<SongsActionsTypes>): DispatchProps => ({
-  fetchSongs: (): any => dispatch(SongThunks.fetchSongs()),
-  insertSong: (song: SongInterface): any => dispatch(SongThunks.insertSong(song)),
-  updateSong: (song: SongInterface): any => dispatch(SongThunks.updateSong(song)),
-  updateSongLocal: (song: SongInterface): any => dispatch(SongActions.UpdateSong(song)),
+  fetchSongs: (): void => dispatch(SongThunks.fetchSongs()),
+  insertSong: (song: SongInterface): void => dispatch(SongThunks.insertSong(song)),
+  updateSong: (song: SongInterface): void => dispatch(SongThunks.updateSong(song)),
+  updateSongLocal: (song: SongInterface): SongsActionsTypes => dispatch(SongActions.UpdateSong(song)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

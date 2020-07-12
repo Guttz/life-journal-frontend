@@ -18,13 +18,13 @@ import LoginModal from './Login/LoginModal';
 import { getProperty, setProperty } from '../../utils/localStorage';
 import './NavigationBar.scss';
 
-const NavigationBar: React.FC = props => {
+const NavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo]: any = useState();
   const toggle = (): void => setIsOpen(!isOpen);
 
   const getUserInfo = (): void => {
-    let user: any = getProperty('user');
+    let user: string = getProperty('user');
     if (!user) return;
     user = JSON.parse(user);
     setUserInfo(user);
@@ -68,13 +68,13 @@ const NavigationBar: React.FC = props => {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem
-                    onClick={() => {
+                    onClick={(): void => {
                       setProperty('user', '');
                       window.location.reload();
                     }}
                   >
                     {' '}
-                      Logout
+                    Logout
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

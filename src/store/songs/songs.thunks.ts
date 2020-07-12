@@ -1,17 +1,17 @@
 import HTTPClient from '../../utils/httpClient';
 import { SongInterface } from './songs.interfaces';
 import SONG_ACTIONS from './songs.actions';
-
+import { Dispatch, AnyAction } from 'redux';
+import { AxiosResponse } from 'axios';
 const fetchSongs = (): any => {
   const http = new HTTPClient();
 
   // Fazer query pro db com todas as músicas
-  const request = http.post<any>('/song/fetchSongs', {});
+  const request = http.post<AxiosResponse<SongInterface[]>>('/song/fetchSongs', {});
 
-  return (dispatch: any): void => {
+  return (dispatch: Dispatch<AnyAction>): void => {
     request.then(
       response => {
-        // Criar action que dá insert em várias songs, com reducer tb e chamar aq
         dispatch(SONG_ACTIONS.SetSongs(response.data));
       },
       error => console.log(error),
@@ -22,9 +22,9 @@ const fetchSongs = (): any => {
 const insertSong = (song: SongInterface): any => {
   const http = new HTTPClient();
   // Fazer query pro db com todas as músicas
-  const request = http.post<any>('/song/insertSong', { song: JSON.stringify(song) });
+  const request = http.post<AxiosResponse<string>>('/song/insertSong', { song: JSON.stringify(song) });
 
-  return (dispatch: any): void => {
+  return (dispatch: Dispatch<AnyAction>): void => {
     request.then(
       response => {
         if (response.status === 200) dispatch(SONG_ACTIONS.InsertSong(song));
@@ -37,8 +37,8 @@ const insertSong = (song: SongInterface): any => {
 const updateSong = (song: SongInterface): any => {
   const http = new HTTPClient();
   // Fazer query pro db com todas as músicas
-  const request = http.post<any>('/song/updateSong', { song: JSON.stringify(song) });
-  return (dispatch: any): void => {
+  const request = http.post<AxiosResponse<SongInterface>>('/song/updateSong', { song: JSON.stringify(song) });
+  return (dispatch: Dispatch<AnyAction>): void => {
     request.then(
       response => {
         if (response.status === 200) dispatch(SONG_ACTIONS.UpdateSong(song));
@@ -51,5 +51,5 @@ const updateSong = (song: SongInterface): any => {
 export default {
   fetchSongs,
   insertSong,
-  updateSong
+  updateSong,
 };

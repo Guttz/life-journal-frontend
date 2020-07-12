@@ -19,14 +19,14 @@ export const saveState = (state: object): void => {
   }
 };
 
-export const getToken = (): any => {
-  // Later when creating editable user, replace any
-  if (!localStorage.getItem('user')) return null;
+export const getToken = (): string => {
+  if (!localStorage.getItem('user')) return '';
 
+  // Later when creating editable user, replace any
   let user: any = localStorage.getItem('user');
   user = JSON.parse(user);
   if (user) return user['token'];
-  else return null;
+  else return '';
 };
 
 export const setToken = (value: string): void => {
@@ -37,6 +37,9 @@ export const setProperty = (key: string, value: string): void => {
   localStorage.setItem(key, value);
 };
 
-export const getProperty = (key: string): any => {
-  return localStorage.getItem(key);
+export const getProperty = (key: string): string => {
+  const itemAux = localStorage.getItem(key);
+  const item = itemAux !== null ? itemAux : '';
+
+  return item;
 };
