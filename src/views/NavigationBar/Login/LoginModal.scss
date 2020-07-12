@@ -1,3 +1,9 @@
+.modal-outer-container {
+  z-index: 1;
+}
+
+.modal-dialog-centered {
+}
 
 .inputClass {
   display: block;
@@ -6,8 +12,6 @@
 .fontIconClass {
   display: inline;
   font-size: 1.3em;
-  margin-top: auto;
-  margin-bottom: auto;
   margin-right: 15px;
 }
 
@@ -18,23 +22,13 @@
 
 .spinner {
   position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
+  z-index: 2; /* Add a z-index if needed */
   left: 50%; /* Center the snackbar */
   bottom: calc(50% - 3rem);
   margin-left: -4.5rem; /* Divide value of min-width by 2 */  
 }
 
 /* The snackbar - position it at the bottom and in the middle of the screen */
-#snackbar1 {
-  min-width: 25vw;
-  max-width: 90vw;
-  margin-left: -13vw; /* Divide value of min-width by 2 */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
-}
-
 #snackbar {
   left: 0;
   margin: auto; // Centers alert component
@@ -43,5 +37,5 @@
   text-align: center; // Centers 'Alert Test' text
   bottom: -12em;
   width: 80%;
-  z-index: 1; // Displays over app and bootstrap Navbar
+  z-index: 2; // Displays over app and bootstrap Navbar
 }

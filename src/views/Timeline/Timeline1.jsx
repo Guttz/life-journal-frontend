@@ -329,8 +329,7 @@
 //     });
 //   };
 
-//   render() {
-//     debugger;
+//   render() { 
 //     const {
 //       stageScaleY,
 //       sWidth,

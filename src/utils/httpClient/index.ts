@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import fetch from 'isomorphic-unfetch';
 
-import { getToken, setToken } from '../../utils/localStorage';
+import { getToken } from '../../utils/localStorage';
 
 export default class HTTPClient {
   private readonly domain: string;
@@ -9,11 +9,6 @@ export default class HTTPClient {
 
   constructor() {
     this.domain = process.env.REACT_APP_BACK_HOST ? process.env.REACT_APP_BACK_HOST : 'http://localhost:4000';
-
-    // [Dev] Temporarily setting the JWT token
-    setToken(
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTk0NDE1ODgzLCJleHAiOjE1OTQ1MDIyODN9.sgJHFvo_xaLIS9JvJ7KIbzz31Ilkujm2dPLrnDv-brw',
-    );
 
     this.axiosInstance = axios.create({
       baseURL: this.domain,

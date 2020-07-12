@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   Navbar,
@@ -12,15 +12,29 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import LoginModal from './Login/LoginModal';
+import { getProperty, setProperty } from '../../utils/localStorage';
+import './NavigationBar.scss';
 
 const NavigationBar: React.FC = props => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userInfo, setUserInfo]: any = useState();
   const toggle = (): void => setIsOpen(!isOpen);
+
+  const getUserInfo = (): void => {
+    let user: any = getProperty('user');
+    if (!user) return;
+    user = JSON.parse(user);
+    setUserInfo(user);
+  };
+
+  useEffect(() => getUserInfo(), []);
 
   return (
     <div>
-      <Navbar color="primary" style={{ display: 'flex', flexDirection: 'row' }} light expand="md">
+      <Navbar className="nav-bar" color="primary" light expand="md">
         <NavbarBrand href="/">The Music Timeline</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -44,7 +58,28 @@ const NavigationBar: React.FC = props => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <LoginModal buttonLabel="Login"></LoginModal>
+          {!userInfo ? (
+            <LoginModal buttonLabel="Login"></LoginModal>
+          ) : (
+            <div className="user-details">
+              <UncontrolledDropdown>
+                <DropdownToggle>
+                  {userInfo['name']} <FontAwesomeIcon className="ml-2" icon={faUserCircle} />
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem
+                    onClick={() => {
+                      setProperty('user', '');
+                      window.location.reload();
+                    }}
+                  >
+                    {' '}
+                      Logout
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </div>
+          )}
         </Collapse>
       </Navbar>
     </div>

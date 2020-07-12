@@ -4,7 +4,7 @@ import { InputGroup, Input, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import HTTPClient from './../../../utils/httpClient';
-import { getToken, setToken } from '../../../utils/localStorage';
+import { setProperty, setToken } from '../../../utils/localStorage';
 import './LoginModal.scss';
 
 type Props = {
@@ -16,7 +16,7 @@ const LoginModal: React.FC<Props> = ({ buttonLabel }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [visibleAlert, setVisibleAlert] = useState(false);
   const [visibleSpinner, setVisibleSpinner] = useState(false);
 
@@ -34,8 +34,10 @@ const LoginModal: React.FC<Props> = ({ buttonLabel }) => {
     loginRequest.then(
       response => {
         setToken(response.data.token);
+        setProperty('user', JSON.stringify(response.data));
         setVisibleSpinner(false);
         onToggleModel();
+        window.location.reload();
       },
       error => {
         setVisibleSpinner(false);
@@ -46,8 +48,11 @@ const LoginModal: React.FC<Props> = ({ buttonLabel }) => {
   };
 
   return (
-    <div>
-      <Button onClick={onToggleModel}>{buttonLabel}</Button>
+    <div className="modal-outer-container">
+      <Button color="transparent" onClick={onToggleModel}>
+        {' '}
+        {buttonLabel}{' '}
+      </Button>
 
       <Modal className="modal-dialog-centered" isOpen={modal} toggle={onToggleModel}>
         <ModalHeader className="d-flex justify-content-center" toggle={onToggleModel}>
