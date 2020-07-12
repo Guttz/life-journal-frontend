@@ -13,7 +13,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import LoginModal from './Login/LoginModal';
 import { getProperty, setProperty } from '../../utils/localStorage';
 import './NavigationBar.scss';

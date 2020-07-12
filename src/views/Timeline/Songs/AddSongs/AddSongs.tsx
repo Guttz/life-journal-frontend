@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
-import axios from 'axios';
 import { Container, Row, Col, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import { SongInterface } from './../../../../store/songs/songs.interfaces';
+import HTTPClient from './../../../../utils/httpClient';
+
 import './AddSongs.scss';
 
 type Props = {
@@ -11,32 +11,23 @@ type Props = {
 };
 
 const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
+  const http = new HTTPClient();
   const [spofitySearchResultList, setSpofitySearchResultList] = useState<any[]>([]);
   const [spofitySearchListSelectedIndex, setSpofitySearchListSelectedIndex] = useState(0);
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
-  async function showSpotifySearchResult(spofitySearchTerm: string) {
-    console.log(spofitySearchTerm);
-    const response = await axios.request({
-      method: 'post',
-      url: 'http://localhost:4001/spotify/spotify-search',
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5OSwidXNlcm5hbWUiOiJndXN0YXZvIiwiaWF0IjoxNTk0NDE1ODgzLCJleHAiOjE1OTQ1MDIyODN9.sgJHFvo_xaLIS9JvJ7KIbzz31Ilkujm2dPLrnDv-brw',
+  function showSpotifySearchResult(spofitySearchTerm: string): void {
+    const request = http.post<any>('/spotify/spotify-search', { queryTerm: spofitySearchTerm });
+    request.then(
+      response => {
+        const spofitySearchResultListAux = response.data.tracks.items.map((item: any, index: number) => {
+          console.log(item);
+          return item;
+        });
+        setSpofitySearchResultList(spofitySearchResultListAux);
       },
-      data: {
-        queryTerm: spofitySearchTerm,
-      },
-    });
-
-    const spofitySearchResultListAux = response.data.tracks.items.map((item: any, index: number) => {
-      console.log(item);
-      return item;
-    });
-
-    setSpofitySearchResultList(spofitySearchResultListAux);
-    console.log('test');
-    console.log(spofitySearchResultList);
+      error => console.log(error),
+    );
   }
 
   const formatSong = (spotifySongResult: any): SongInterface => {
@@ -66,14 +57,14 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
     return newSongNoID;
   };
 
-  function aud_play_pause() {
+  /*   function aud_play_pause() {
     if (audioRef.current?.paused) {
       audioRef.current.volume = 0.3;
       audioRef.current.play();
     } else {
       audioRef.current?.pause();
     }
-  }
+  } */
 
   return (
     <div
@@ -123,9 +114,9 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                     </li>
                   </div>
                   {item.preview_url ? (
-                    <a
+                    <button
                       className="btn btn-small"
-                      onClick={() => {
+                      onClick={(): void => {
                         setSpofitySearchListSelectedIndex(i);
                         if (!audioRef.current?.paused && audioRef.current?.currentSrc === item.preview_url) {
                           audioRef.current?.pause();
@@ -135,24 +126,22 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
                           audioRef.current?.play();
                         }
                       }}
-                      href="#"
                     >
                       <i className="fas fa-play fa-lg"></i>
-                    </a>
+                    </button>
                   ) : (
-                    <a className="btn btn-small" style={{ color: 'transparent' }}>
+                    <button className="btn btn-small" style={{ color: 'transparent' }}>
                       <i className="fas fa-play fa-lg"></i>
-                    </a>
+                    </button>
                   )}
-                  <a
+                  <button
                     className="btn btn-small"
                     onClick={() => {
                       insertSong(formatSong(item));
                     }}
-                    href="#"
                   >
                     <i className="fas fa-plus fa-lg"></i>
-                  </a>
+                  </button>
                 </Row>
               );
             })}

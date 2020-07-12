@@ -23,10 +23,7 @@ const SongsComponent: React.FC<Props> = ({ songs, fetchSongs, insertSong, update
   const [hideAddSongs, setHideAddSongs] = useState(true);
   const [selectedSong, setSelectedSong] = useState<SongInterface | null>(null);
 
-  useEffect(() => {
-    // Fetching Songs from Database
-    fetchSongs();
-  }, []);
+  useEffect(fetchSongs, []);
 
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);

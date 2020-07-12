@@ -5,7 +5,6 @@ import { Stage, Layer, Star, Text, Line } from 'react-konva';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import Songs from './../../containers/SongsContainer';
 import TextMoment from '../../components/TextMoment/TextMoment';
-import AddMoment from '../../components/AddMoment/AddMoment';
 import './Timeline.scss';
 
 class Timeline extends Component {
