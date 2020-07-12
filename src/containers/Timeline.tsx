@@ -2,14 +2,14 @@ import Timeline from './../views/Timeline/Timeline';
 import { connect } from 'react-redux';
 import actions from './../store/actions';
 
-const mapStateToProps = (state: any): any => {
+const mapStateToProps = (state: any): object => {
   return {
     items: state.items,
   };
 };
 
 // Question - Best way to mapDipatchToProps, dispatch here or in view
-const mapDispatchToProps = (dispatch: any): any => ({
+const mapDispatchToProps = (dispatch: any): object => ({
   createItem: (description: string): void => dispatch(actions.createItem(description)),
   deleteItem: (id: number): void => dispatch(actions.deleteItem(id)),
 });

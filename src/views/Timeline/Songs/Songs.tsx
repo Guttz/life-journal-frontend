@@ -8,17 +8,27 @@ import { SongInterface } from './../../../store/songs/songs.interfaces';
 import Portal from './../../../components/utils/portal';
 import './Songs.scss';
 
-type Props = {
+export type StateProps = {
   lastIndex: number;
   layerY: number;
   songs: Array<SongInterface>;
+};
+
+export type DispatchProps = {
   fetchSongs: () => void;
   insertSong: (song: SongInterface) => void;
   updateSong: (song: SongInterface) => void;
   updateSongLocal: (song: SongInterface) => void;
 };
 
-const SongsComponent: React.FC<Props> = ({ songs, fetchSongs, insertSong, updateSong, updateSongLocal, layerY }) => {
+const SongsComponent: React.FC<StateProps & DispatchProps> = ({
+  songs,
+  fetchSongs,
+  insertSong,
+  updateSong,
+  updateSongLocal,
+  layerY,
+}) => {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [hideAddSongs, setHideAddSongs] = useState(true);
   const [selectedSong, setSelectedSong] = useState<SongInterface | null>(null);

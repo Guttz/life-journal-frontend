@@ -3,14 +3,14 @@ import { Text, Image, Ring, Circle, Line, Group } from 'react-konva';
 import { SongInterface } from './../../store/songs/songs.interfaces';
 import useImage from 'use-image';
 import Konva from 'konva';
+import { IRect } from './../../../node_modules/konva/types/types';
 
 type Props = {
   onClick(event: Konva.KonvaEventObject<MouseEvent>): void;
-  onDragStart(event: any): void;
-  onDragMove(event: any): void;
-  onDragEnd(event: any): void;
-  onDblClick(event: any): void;
-  createItem?(task: string): any;
+  onDragStart(event: Konva.KonvaEventObject<DragEvent>): void;
+  onDragMove(event: Konva.KonvaEventObject<DragEvent>): void;
+  onDragEnd(event: Konva.KonvaEventObject<DragEvent>): void;
+  onDblClick(event: Konva.KonvaEventObject<MouseEvent>): void;
 };
 
 const SongMoment: React.FC<SongInterface & Props> = ({
@@ -30,11 +30,13 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   const [image] = useImage(imageURL);
   const imgPixels = 64;
   const [groupAttrs, setGroupAttrs] = useState({ x: 0, y: 0, width: 0, height: 0 });
-  let groupRef: any = React.createRef();
+  const groupRef: React.RefObject<Konva.Group> = React.createRef();
   useEffect(() => {
-    const groupAttrsAux: any = groupRef.getClientRect();
-    if (groupAttrsAux.height !== groupAttrs.height) {
-      setGroupAttrs(groupAttrsAux);
+    const groupAttrsAux: IRect | undefined = groupRef.current?.getClientRect(null);
+    if (groupAttrsAux !== undefined) {
+      if (groupAttrsAux.height !== groupAttrs.height) {
+        setGroupAttrs(groupAttrsAux);
+      }
     }
   }, [groupRef, groupAttrs.height]);
 
@@ -51,14 +53,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
     >
       <Line points={[window.innerWidth / 2 - x, groupAttrs.height / 2, 0, groupAttrs.height / 2]} stroke="grey" />
       {/* <Rect width={groupAttrs.width} height={groupAttrs.height} fill="white"></Rect> */}
-      <Group
-        ref={ref => {
-          groupRef = ref;
-        }}
-        onClick={() => {}}
-        scaleX={0.5 + importance}
-        scaleY={0.5 + importance}
-      >
+      <Group ref={groupRef} onClick={() => {}} scaleX={0.5 + importance} scaleY={0.5 + importance}>
         <Image
           x={(imgPixels / 2) * (Math.sqrt(2) - 1)}
           y={(imgPixels / 2) * (Math.sqrt(2) - 1)}

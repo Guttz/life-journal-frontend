@@ -6,13 +6,20 @@ import Memory from './../../models/MemoryModel';
 import PropTypes from 'prop-types';
 import './Home.css';
 
-type Props = {
+export type StateProps = {
   items?: Memory[];
+};
+
+export type DispatchProps = {
   createItem?(task: string): any;
   deleteItem?(id: number): any;
 };
 
-const Home: React.FC<Props> = ({ items = [], createItem = (): void => {}, deleteItem = (): void => {} }) => {
+const Home: React.FC<StateProps & DispatchProps> = ({
+  items = [],
+  createItem = (): void => {},
+  deleteItem = (): void => {},
+}) => {
   const [inputDescription, setInputDescription] = useState('');
   const [spofitySearchResultList, setSpofitySearchResultList] = useState<any[]>([]);
   const [spofitySearchListSelectedIndex, setSpofitySearchListSelectedIndex] = useState(0);

@@ -1,4 +1,5 @@
 import SongsComponent from '../views/Timeline/Songs/Songs';
+import { DispatchProps, StateProps } from '../views/Timeline/Songs/Songs';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RootState } from '../store/rootState';
@@ -9,7 +10,7 @@ import SongThunks from '../store/songs/songs.thunks';
 
 // Create props type here and import in the component
 
-const mapStateToProps = (state: RootState, props: { layerY: number }): any => {
+const mapStateToProps = (state: RootState, props: { layerY: number }): StateProps => {
   return {
     lastIndex: state.songs.lastIndex,
     layerY: props.layerY,
@@ -18,7 +19,7 @@ const mapStateToProps = (state: RootState, props: { layerY: number }): any => {
 };
 
 // Question - Best way to mapDipatchToProps, dispatch here or in view
-const mapDispatchToProps = (dispatch: Dispatch<SongsActionsTypes>): any => ({
+const mapDispatchToProps = (dispatch: Dispatch<SongsActionsTypes>): DispatchProps => ({
   fetchSongs: (): any => dispatch(SongThunks.fetchSongs()),
   insertSong: (song: SongInterface): any => dispatch(SongThunks.insertSong(song)),
   updateSong: (song: SongInterface): any => dispatch(SongThunks.updateSong(song)),
