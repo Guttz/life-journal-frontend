@@ -8,8 +8,6 @@ import { SongInterface } from '../store/songs/songs.interfaces';
 import SongActions from '../store/songs/songs.actions';
 import SongThunks from '../store/songs/songs.thunks';
 
-// Create props type here and import in the component
-
 const mapStateToProps = (state: RootState, props: { layerY: number }): StateProps => {
   return {
     lastIndex: state.songs.lastIndex,
@@ -18,7 +16,6 @@ const mapStateToProps = (state: RootState, props: { layerY: number }): StateProp
   };
 };
 
-// Question - Best way to mapDipatchToProps, dispatch here or in view
 const mapDispatchToProps = (dispatch: Dispatch<SongsActionsTypes>): DispatchProps => ({
   fetchSongs: (): any => dispatch(SongThunks.fetchSongs()),
   insertSong: (song: SongInterface): any => dispatch(SongThunks.insertSong(song)),

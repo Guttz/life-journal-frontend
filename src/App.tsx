@@ -3,7 +3,6 @@ import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/rootStore';
-import Home from './containers/Home';
 import Timeline from './containers/Timeline';
 import Page404 from './views/Pages/Page404/Page404';
 import logo from './logo.svg';
@@ -19,7 +18,6 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/404" render={props => <Page404 />} />
             <Route exact path="/" render={props => <Timeline />} />
-            <Route path="/timeline" render={props => <Home />} />
             <Route
               path="/default"
               exact
