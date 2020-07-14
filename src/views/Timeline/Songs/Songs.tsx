@@ -35,6 +35,29 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
 
   useEffect(fetchSongs, []);
 
+  const onClick = (clickedSong: SongInterface): void => {
+    const toPlaySong = songs.find(auxSong => auxSong.id === clickedSong.id);
+    if (toPlaySong) {
+      toPlaySong.playing = !toPlaySong.playing;
+      updateSong(toPlaySong);
+      if(selectedSong){
+        const currentlyPlayingSong = songs.find(auxSong => auxSong.id === selectedSong.id);
+        if(currentlyPlayingSong){
+          currentlyPlayingSong.playing = false;
+          updateSong(currentlyPlayingSong);
+        }
+      }
+    }
+    setSelectedSong(clickedSong);
+    if (!audioRef.current?.paused && audioRef.current?.currentSrc === clickedSong.previewURL) {
+      audioRef.current?.pause();
+    } else {
+      audioRef.current?.pause();
+      audioRef.current?.load();
+      audioRef.current?.play();
+    }
+  }
+
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
     //setGroupX(e.currentTarget.attrs.x);
@@ -63,14 +86,6 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
           <source src={selectedSong?.previewURL} type="audio/mpeg"></source>
           Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
         </audio>
-        <button
-          onClick={() => setHideAddSongs(!hideAddSongs)}
-          onKeyDown={(e: React.KeyboardEvent): void => {
-            if (e.keyCode === 27) setHideAddSongs(true);
-          }}
-        >
-          Add Song
-        </button>
         <div
           id="add-songs-overlay"
           hidden={hideAddSongs}
@@ -86,16 +101,8 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
         <SongMoment
           key={song.id}
           {...song}
-          onClick={(): void => {
-            setSelectedSong(song);
-            if (!audioRef.current?.paused && audioRef.current?.currentSrc === song.previewURL) {
-              audioRef.current?.pause();
-            } else {
-              audioRef.current?.pause();
-              audioRef.current?.load();
-              audioRef.current?.play();
-            }
-          }}
+          // Move this to own function
+          onClick={() => onClick(song)}
           onDragStart={() => {}}
           onDragMove={(e: Konva.KonvaEventObject<DragEvent>): void => onDragMove(e, song.id)}
           onDragEnd={(e: Konva.KonvaEventObject<DragEvent>): void => onDragEnd(e, song.id)}

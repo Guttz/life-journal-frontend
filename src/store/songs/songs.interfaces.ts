@@ -4,6 +4,7 @@ export type SongInterface = {
   artists: Array<string>;
   timelineDate: Date;
   previewURL: string;
+  playing: boolean;
   imageURL: string;
   importance: number;
   x: number;

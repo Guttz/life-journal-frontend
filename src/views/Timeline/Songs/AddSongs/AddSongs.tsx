@@ -47,6 +47,7 @@ const AddSongs: React.FC<Props> = ({ insertSong, hideAddSongsOverlay }) => {
       name: spotifySongResult.name,
       artists: formattedArtistsArray,
       timelineDate: new Date(spotifySongResult.album.release_date),
+      playing: false,
       previewURL: spotifySongResult.preview_url,
       imageURL: formattedImageURL,
       importance: spotifySongResult.popularity / 100,

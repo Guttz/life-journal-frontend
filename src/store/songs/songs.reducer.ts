@@ -10,6 +10,7 @@ const defaultState: SongsInterface = {
       name: 'The music history',
       artists: ['Mc Anônimo'],
       timelineDate: new Date(),
+      playing: false,
       previewURL:
         'https://p.scdn.co/mp3-preview/6bca32671e4b4ad1ffd06098116156b25c2ecb03?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
       imageURL: 'https://i.scdn.co/image/ab67616d00004851b6fc75952c040034b98be0d3',
@@ -22,6 +23,7 @@ const defaultState: SongsInterface = {
       name: 'Pagou De Superada',
       artists: ['Gustavo Morais', 'Anitta'],
       timelineDate: new Date(),
+      playing: false,
       previewURL:
         'https://p.scdn.co/mp3-preview/5331b61d2f5e5785b0d909b183bcdcc1e50db549?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
       imageURL: 'https://i.scdn.co/image/ab67616d00004851dea627d98a8de6a466932965',
@@ -34,6 +36,7 @@ const defaultState: SongsInterface = {
       name: 'Vem Me Satisfazer',
       artists: ['MC Ingryd', 'DJ Henrique da VK'],
       timelineDate: new Date(),
+      playing: false,
       previewURL:
         'https://p.scdn.co/mp3-preview/2eb58d711156dd4910d241f6fe4018f39d693236?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
       imageURL: 'https://i.scdn.co/image/ab67616d00004851a2f03baa21791237c1fd42c0',

@@ -18,6 +18,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   artists,
   imageURL,
   importance,
+  playing,
   x,
   y,
   onClick,
@@ -30,6 +31,10 @@ const SongMoment: React.FC<SongInterface & Props> = ({
   const imgPixels = 64;
   const [groupAttrs, setGroupAttrs] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const groupRef: React.RefObject<Konva.Group> = React.createRef();
+
+  const [playingAnimationControlRefs, setPlayingAnimationControlRefs] = useState<any[]>([]);
+  const [playingAnimationControl, setPlayingAnimationControl] = useState(2);
+
   useEffect(() => {
     const groupAttrsAux: IRect | undefined = groupRef.current?.getClientRect(null);
     if (groupAttrsAux !== undefined) {
@@ -38,6 +43,33 @@ const SongMoment: React.FC<SongInterface & Props> = ({
       }
     }
   }, [groupRef, groupAttrs.height]);
+
+
+  // Something here might have broken ESLint
+  useEffect(() => {
+    const beatAnimationCircleSize = 0.2;
+    const beatAnimationTiming = 200;
+    if(playing){
+      const playingAnimationRef = setInterval(() => {
+        setPlayingAnimationControl(playingAnimationControl - beatAnimationCircleSize);
+      }, beatAnimationTiming);
+      let playingAnimationRef2;
+      setTimeout(() => { 
+        playingAnimationRef2 = setInterval(() => {
+          setPlayingAnimationControl(playingAnimationControl + beatAnimationCircleSize);
+        }, beatAnimationTiming); 
+        setPlayingAnimationControlRefs([playingAnimationRef, playingAnimationRef2]) 
+      }, beatAnimationTiming/2);
+      
+    }
+    else
+      console.log("paused");
+      console.log(playingAnimationControlRefs);
+      console.log(playingAnimationControl);
+      setPlayingAnimationControl(1.6);
+      playingAnimationControlRefs.forEach((playingRef: any) => clearTimeout(playingRef));
+  }, [playing])
+
 
   return (
     <Group
@@ -70,7 +102,7 @@ const SongMoment: React.FC<SongInterface & Props> = ({
         <Circle
           x={(imgPixels / 2) * Math.sqrt(2)}
           y={(imgPixels / 2) * Math.sqrt(2)}
-          radius={imgPixels / 2}
+          radius={imgPixels / playingAnimationControl}
           stroke="#26A65B"
           strokeWidth={2}
         ></Circle>
