@@ -79,10 +79,30 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
     }
   };
 
+  const autoPlayNext = (): void => {
+    if(!selectedSong)
+    return;
+
+    let shorterDistance = 999999;
+    let nextSong: SongInterface | null = null;
+
+    songs.forEach((currSong: SongInterface) => {
+      if(currSong.id === selectedSong.id || currSong.y < selectedSong.y ) return;
+      // method 1 const songsDistance = Math.sqrt( (currSong.x - selectedSong.x)**2 + (currSong.y - selectedSong.y)**2 );
+      const songsDistance = currSong.y - selectedSong.y; 
+      if( songsDistance <  shorterDistance){
+        nextSong = currSong;
+        shorterDistance = songsDistance;
+      }
+    });
+    if(nextSong)
+      onClick(nextSong);
+  }
+
   return (
     <Layer y={layerY}>
       <Portal>
-        <audio ref={audioRef}>
+        <audio ref={audioRef} onEnded={autoPlayNext}>
           <source src={selectedSong?.previewURL} type="audio/mpeg"></source>
           Dieser HTML5 Player wird von Deinem Browser nicht unterstützt.
         </audio>
