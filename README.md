@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the Frontend for my Music Timeline application, where you can build your own timeline using the Spotify API and play a preview of them.
 
 ## Available Scripts
 
@@ -39,7 +39,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Todo
 
-[ ] - Create create model and implement all user-related operations
+[ ] - Create user model and implement all user-related operations
 
 ## Learn More
 
