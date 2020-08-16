@@ -16,14 +16,14 @@
   <script>
         // AUDIO CONTEXT
     window.AudioContext = window.AudioContext || window.webkitAudioContext ;
-
+    window.aaaaaa = "test";
     if (!AudioContext) alert('This site cannot be run in your Browser. Try a recent Chrome or Firefox. ');
 
     var audioContext = new AudioContext();
     var bufferSource = audioContext.createBufferSource(); // creates a sound source
     //var streamSource = audioContext.createMedia createMediaStreamSource
     // CANVAS
-    var canvasWidth = 512,  canvasHeight = 120 ;
+    var canvasWidth = 1400,  canvasHeight = 500 ;
     var newCanvas   = createCanvas (canvasWidth, canvasHeight);
     var context     = null;
 
@@ -32,9 +32,31 @@
 
     var dataArray = new Uint8Array(waveAnalyser.frequencyBinCount);
 
+    const processedBufferFreq = {}
+
     window.onload = appendCanvas;
     function appendCanvas() { document.body.appendChild(newCanvas);
-                              context = newCanvas.getContext('2d'); }
+                              context = newCanvas.getContext('2d');
+                              window.test_context = context;
+                              context.fillStyle = 'red' ;
+                              context.fillRect(0,0,canvasWidth,canvasHeight);
+                              context.clearRect(0,0,canvasWidth,canvasHeight);
+                              context.strokeStyle = 'red';
+                            context.globalCompositeOperation = 'lighter';
+                            //context.translate(0,canvasHeight/2 + 50);
+                            context.globalAlpha = 1; // lineOpacity ;
+                              
+                              // on which line do we get ?
+                              var x = Math.floor ( 500 * (canvasWidth / 1024  ) ) ;
+                              var y = 100;
+                              context.beginPath();
+                              context.moveTo( x  , canvasHeight/2);
+                              context.lineTo( x,  canvasHeight/2 - 100);
+                              context.moveTo( x  , canvasHeight/2);
+                              context.lineTo( x,  canvasHeight/2 + 100);
+                              context.stroke();
+
+                                }
 
     // MUSIC LOADER + DECODE
     function loadMusic(url) {   
@@ -65,17 +87,38 @@
                                 analyser.connect(scp);
                                 scp.connect(offline.destination); // this is necessary for the script processor to start 
                                 var freqData = new Uint8Array(analyser.frequencyBinCount);
-                                scp.onaudioprocess = function(){
+                                var auxDate = new Date(); 
+                                var auxPlayback = 0; 
+
+                                scp.onaudioprocess = (e) => {
+                                
+                                  var currentdate = new Date(); 
+                                  console.log(e.playbackTime - auxPlayback);
+                                  auxPlayback = e.playbackTime;
                                   analyser.getByteFrequencyData(freqData);
-                                  console.log(freqData);
-                                  analyser.getByteTimeDomainData(freqData);
-                                  console.log(freqData);
+                                  processedBufferFreq[e.playbackTime] = freqData;
+                                  //console.log("Frequency data: " + currentdates.getMilliseconds().toString())
+                                  //console.log(freqData);
+                                  if(Math.abs(currentdate - auxDate) > 100){
+                                    auxDate = currentdate;
+                                    displayBuffer2(freqData);
+                                    //showBeat(freqData);
+                                  }
+                                    
+                                  //analyser.getByteTimeDomainData(freqData);
+                                  //console.log("TimeDomain data " + currentdate.getMilliseconds().toString())
+                                  //console.log(freqData);
                                 };
-                                bufferSourceOf.start(0);
+                               
                                 
                                 offline.oncomplete = function(e){
                                   console.log('analysed');
-                                  bufferSource.start(0);
+                                  bufferSourceOf.start(0);
+                                  setInterval( () => {
+                                    displayBuffer2(processedBufferFreq)
+                                  }, 50);
+                                  //debugger
+
                                 };
                                 offline.startRendering();
   
@@ -97,7 +140,7 @@
       context.fillRect(0,0,canvasWidth,canvasHeight );
       context.strokeStyle = '#121';
       context.globalCompositeOperation = 'lighter';
-      context.translate(0,canvasHeight / 2);
+      //context.translate(0,canvasHeight / 2);
       context.globalAlpha = 0.06 ; // lineOpacity ;
       for (var i=0; i<  leftChannel.length; i++) {
           // on which line do we get ?
@@ -108,9 +151,42 @@
           context.lineTo( x+1, y );
           context.stroke();
       }
+      
       context.restore();
       console.log('done');
     }
+
+    // MUSIC DISPLAY
+    function displayBuffer2(leftChannel /* is an AudioBuffer */) {
+      context = window.test_context
+      //var leftChannel = buff.getChannelData(0); // Float32Array describing left channel
+      var lineOpacity = canvasWidth / leftChannel.length  ;      
+      window.test_context.save();
+      window.test_context.clearRect(0,0,canvasWidth,canvasHeight);
+      window.test_context.strokeStyle = 'blue';
+      window.test_context.globalCompositeOperation = 'lighter';
+      window.test_context.globalAlpha = 1 ; // lineOpacity ;
+
+      // window.test_context.beginPath();
+      // window.test_context.moveTo( 300  , 0 );
+      // window.test_context.lineTo( 300+1, 15000 );
+      // window.test_context.stroke();
+
+      for (var i=0; i<  leftChannel.length; i++) {
+          // on which line do we get ?
+          var x = Math.floor ( canvasWidth * i / leftChannel.length ) ;
+          var y = leftChannel[i] ;
+          window.test_context.beginPath();
+
+          window.test_context.moveTo( x  , canvasHeight/2);
+          window.test_context.lineTo( x+1,  canvasHeight/2 - y);
+          window.test_context.moveTo( x  , canvasHeight/2);
+          window.test_context.lineTo( x+1,  canvasHeight/2 + y);
+          window.test_context.stroke();
+      }
+      console.log('done');
+    }
+
 
     function createCanvas ( w, h ) {
         var newCanvas = document.createElement('canvas');
