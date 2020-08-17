@@ -32,7 +32,7 @@
 
     var dataArray = new Uint8Array(waveAnalyser.frequencyBinCount);
 
-    const processedBufferFreq = {}
+    const processedBufferFreq = []
 
     window.onload = appendCanvas;
     function appendCanvas() { document.body.appendChild(newCanvas);
@@ -85,24 +85,21 @@
 
                                 bufferSourceOf.connect(analyser);
                                 analyser.connect(scp);
-                                scp.connect(offline.destination); // this is necessary for the script processor to start 
+                                scp.connect(offline.destination); // this is necessary for the script processor to start
+
+                                const milisecondsAnalyze = 100;
                                 var freqData = new Uint8Array(analyser.frequencyBinCount);
                                 var auxDate = new Date(); 
-                                var auxPlayback = 0; 
-
+                                var auxPlayback = 0;
                                 scp.onaudioprocess = (e) => {
                                 
                                   var currentdate = new Date(); 
-                                  console.log(e.playbackTime - auxPlayback);
-                                  auxPlayback = e.playbackTime;
+                                  
                                   analyser.getByteFrequencyData(freqData);
-                                  processedBufferFreq[e.playbackTime] = freqData;
-                                  //console.log("Frequency data: " + currentdates.getMilliseconds().toString())
-                                  //console.log(freqData);
-                                  if(Math.abs(currentdate - auxDate) > 100){
-                                    auxDate = currentdate;
-                                    displayBuffer2(freqData);
-                                    //showBeat(freqData);
+                                  console.log(freqData);
+                                  if( (e.playbackTime - auxPlayback)*1000 > milisecondsAnalyze){
+                                    auxPlayback = e.playbackTime;
+                                    processedBufferFreq.push(freqData);
                                   }
                                     
                                   //analyser.getByteTimeDomainData(freqData);
@@ -110,13 +107,16 @@
                                   //console.log(freqData);
                                 };
                                
-                                
-                                offline.oncomplete = function(e){
+                                bufferSourceOf.start(0);
+                                offline.oncomplete = () => {
                                   console.log('analysed');
-                                  bufferSourceOf.start(0);
+                                  //bufferSourceOf.start(0);
+                                  var auxAnimation = 0;
                                   setInterval( () => {
-                                    displayBuffer2(processedBufferFreq)
-                                  }, 50);
+                                    //debugger
+                                    displayBuffer2(processedBufferFreq[auxAnimation])
+                                    auxAnimation++;
+                                  }, milisecondsAnalyze);
                                   //debugger
 
                                 };
