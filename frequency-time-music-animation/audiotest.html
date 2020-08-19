@@ -96,10 +96,10 @@
                                   var currentdate = new Date(); 
                                   
                                   analyser.getByteFrequencyData(freqData);
-                                  console.log(freqData);
                                   if( (e.playbackTime - auxPlayback)*1000 > milisecondsAnalyze){
+                                    debugger
                                     auxPlayback = e.playbackTime;
-                                    processedBufferFreq.push(freqData);
+                                    processedBufferFreq.push(freqData.slice());
                                   }
                                     
                                   //analyser.getByteTimeDomainData(freqData);
@@ -113,7 +113,7 @@
                                   //bufferSourceOf.start(0);
                                   var auxAnimation = 0;
                                   setInterval( () => {
-                                    //debugger
+                                    debugger
                                     displayBuffer2(processedBufferFreq[auxAnimation])
                                     auxAnimation++;
                                   }, milisecondsAnalyze);
