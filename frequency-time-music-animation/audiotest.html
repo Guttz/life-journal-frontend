@@ -9,7 +9,7 @@
     
   </head>
   <body>
-    <h1>This is a static template, there is no bundler or bundling involved!</h1>
+    <h1>Live Music Beat on the Web Browser </h1>
     <button onclick="loadMusic('https://p.scdn.co/mp3-preview/819980211c2d492dfdce4967df6176f86c2023f2?cid=21dbe53cbabe4f03b2ad3090342a7bbc')">Play</button>
   </body>
 
@@ -23,7 +23,7 @@
     var bufferSource = audioContext.createBufferSource(); // creates a sound source
     //var streamSource = audioContext.createMedia createMediaStreamSource
     // CANVAS
-    var canvasWidth = 1400,  canvasHeight = 500 ;
+    var canvasWidth = 1400,  canvasHeight = 1000 ;
     var newCanvas   = createCanvas (canvasWidth, canvasHeight);
     var context     = null;
 
@@ -54,7 +54,7 @@
                               context.lineTo( x,  canvasHeight/2 - 100);
                               context.moveTo( x  , canvasHeight/2);
                               context.lineTo( x,  canvasHeight/2 + 100);
-                              context.stroke();
+                              //context.stroke();
 
                                 }
 
@@ -87,7 +87,7 @@
                                 analyser.connect(scp);
                                 scp.connect(offline.destination); // this is necessary for the script processor to start
 
-                                const milisecondsAnalyze = 100;
+                                const milisecondsAnalyze = 0;
                                 var freqData = new Uint8Array(analyser.frequencyBinCount);
                                 var auxDate = new Date(); 
                                 var auxPlayback = 0;
@@ -96,10 +96,12 @@
                                   var currentdate = new Date(); 
                                   
                                   analyser.getByteFrequencyData(freqData);
+                                  //analyser.getByteTimeDomainData(freqData);
+                                  //processedBufferFreq.push( {playbackTime: e.playbackTime, data: freqData.slice()});
+
                                   if( (e.playbackTime - auxPlayback)*1000 > milisecondsAnalyze){
-                                    debugger
                                     auxPlayback = e.playbackTime;
-                                    processedBufferFreq.push(freqData.slice());
+                                    processedBufferFreq.push( {playbackTime: e.playbackTime, data: freqData.slice()});
                                   }
                                     
                                   //analyser.getByteTimeDomainData(freqData);
@@ -110,15 +112,43 @@
                                 bufferSourceOf.start(0);
                                 offline.oncomplete = () => {
                                   console.log('analysed');
-                                  //bufferSourceOf.start(0);
+                                  const startDate = new Date();
+                                  bufferSource.start(0);
+                                  displayBuffer2(processedBufferFreq[0].data)
                                   var auxAnimation = 0;
-                                  setInterval( () => {
-                                    debugger
-                                    displayBuffer2(processedBufferFreq[auxAnimation])
-                                    auxAnimation++;
-                                  }, milisecondsAnalyze);
-                                  //debugger
 
+                                  syncSprites = () => {
+                                    auxAnimation++;
+                                    console.log((new Date() - startDate ) + " == " + processedBufferFreq[auxAnimation].playbackTime*1000 )
+                                    displayBuffer2(processedBufferFreq[auxAnimation].data)
+                                    setTimeout( () => {
+                                      syncSprites();
+                                    }, processedBufferFreq[auxAnimation+1].playbackTime*1000 - (new Date() - startDate));
+
+                                  }
+                                  syncSprites();
+                                  
+                                  // setTimeout(() => {
+                                  //   auxAnimation++;
+                                  //   console.log((new Date() - startDate ) + " == " + processedBufferFreq[auxAnimation].playbackTime*1000 )
+                                  //   displayBuffer2(processedBufferFreq[auxAnimation].data)
+
+                                  //   setTimeout( () => {
+                                  //     auxAnimation++;
+                                  //     console.log((new Date() - startDate ) + " == " + processedBufferFreq[auxAnimation].playbackTime*1000 )
+                                  //     displayBuffer2(processedBufferFreq[auxAnimation].data)
+                                  //   }, processedBufferFreq[auxAnimation+1].playbackTime*1000 - (new Date() - startDate));
+
+
+                                  // }, processedBufferFreq[auxAnimation+1].playbackTime*1000 - (new Date() - startDate) );
+
+                                  // setInterval( () => {
+                                  //   debugger
+                                  //   auxAnimation++;
+                                  //   console.log((new Date() - startDate ) + " == " + processedBufferFreq[auxAnimation].playbackTime*1000 )
+                                  //   displayBuffer2(processedBufferFreq[auxAnimation].data)
+                                  // }, processedBufferFreq[auxAnimation+1].playbackTime*1000 - (new Date() - startDate) )
+                                  //debugger
                                 };
                                 offline.startRendering();
   
@@ -152,8 +182,6 @@
           context.stroke();
       }
       
-      context.restore();
-      console.log('done');
     }
 
     // MUSIC DISPLAY
@@ -163,9 +191,10 @@
       var lineOpacity = canvasWidth / leftChannel.length  ;      
       window.test_context.save();
       window.test_context.clearRect(0,0,canvasWidth,canvasHeight);
-      window.test_context.strokeStyle = 'blue';
-      window.test_context.globalCompositeOperation = 'lighter';
-      window.test_context.globalAlpha = 1 ; // lineOpacity ;
+      context.fillStyle = 'yellow' ;
+      context.fillRect(0,0,canvasWidth,canvasHeight);
+      window.test_context.strokeStyle = 'black';
+      window.test_context.globalAlpha = 0.9 ; // lineOpacity ;
 
       // window.test_context.beginPath();
       // window.test_context.moveTo( 300  , 0 );
@@ -184,7 +213,6 @@
           window.test_context.lineTo( x+1,  canvasHeight/2 + y);
           window.test_context.stroke();
       }
-      console.log('done');
     }
 
 
