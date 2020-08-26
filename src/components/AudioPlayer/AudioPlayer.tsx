@@ -7,10 +7,11 @@ type Props = {};
 const AudioPlayer: React.FC<Props> = ({}) => {
   const [image] = useImage('https://image.flaticon.com/icons/svg/860/860780.svg');
   //window.AudioContext = window.AudioContext || window.webkitAudioContext ;
-  window.AudioContext = window.AudioContext;
-  if (!AudioContext) alert('This site cannot be run in your Browser. Try a recent Chrome or Firefox. ');
+  window.AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+  window.OfflineAudioContext = window.OfflineAudioContext || (window as any).webkitOfflineAudioContext;
+  if (!AudioContext) alert('This site cannot be run in your Browser. Try a recent version of Chrome or Firefox. ');
 
-  const audioContext = new AudioContext();
+  let audioContext = new AudioContext();
 
   // MUSIC LOADER + DECODE
   const loadMusic = (url: string) => {
@@ -19,11 +20,13 @@ const AudioPlayer: React.FC<Props> = ({}) => {
     req.responseType = 'arraybuffer';
     req.onreadystatechange = e => {
       if (req.readyState == 4) {
+        audioContext.close();
+        audioContext = new AudioContext();
         if (req.status == 200)
           audioContext.decodeAudioData(
             req.response,
             buffer => {
-              console.log('bufferizado');
+              //audioContext.close();
               const bufferSource = audioContext.createBufferSource(); // creates a sound source
 
               const processedBufferFreq = [];
@@ -55,6 +58,7 @@ const AudioPlayer: React.FC<Props> = ({}) => {
                 //processedBufferFreq.push( {playbackTime: e.playbackTime, data: freqData.slice()});
 
                 if ((e.playbackTime - auxPlayback) * 1000 > milisecondsAnalyze) {
+                  //console.log(freqData);
                   auxPlayback = e.playbackTime;
                   processedBufferFreq.push({ playbackTime: e.playbackTime, data: freqData.slice() });
                 }
