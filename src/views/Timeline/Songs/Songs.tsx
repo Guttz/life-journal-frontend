@@ -6,6 +6,7 @@ import AddSongs from './AddSongs/AddSongs';
 import AddMoment from '../../../components/AddMoment/AddMoment';
 import { SongInterface } from './../../../store/songs/songs.interfaces';
 import Portal from './../../../components/utils/portal';
+import AudioPlayer from './../../../components/AudioPlayer/AudioPlayer';
 import './Songs.scss';
 
 export type StateProps = {
@@ -40,9 +41,9 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
     if (toPlaySong) {
       toPlaySong.playing = !toPlaySong.playing;
       updateSong(toPlaySong);
-      if(selectedSong){
+      if (selectedSong) {
         const currentlyPlayingSong = songs.find(auxSong => auxSong.id === selectedSong.id);
-        if(currentlyPlayingSong){
+        if (currentlyPlayingSong) {
           currentlyPlayingSong.playing = false;
           updateSong(currentlyPlayingSong);
         }
@@ -56,7 +57,7 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
       audioRef.current?.load();
       audioRef.current?.play();
     }
-  }
+  };
 
   const onDragMove = (e: Konva.KonvaEventObject<DragEvent>, songID: number): void => {
     const updatedSong = songs.find(auxSong => auxSong.id === songID);
@@ -80,24 +81,22 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
   };
 
   const autoPlayNext = (): void => {
-    if(!selectedSong)
-    return;
+    if (!selectedSong) return;
 
     let shorterDistance = 999999;
     let nextSong: SongInterface | null = null;
 
     songs.forEach((currSong: SongInterface) => {
-      if(currSong.id === selectedSong.id || currSong.y < selectedSong.y ) return;
+      if (currSong.id === selectedSong.id || currSong.y < selectedSong.y) return;
       // method 1 const songsDistance = Math.sqrt( (currSong.x - selectedSong.x)**2 + (currSong.y - selectedSong.y)**2 );
-      const songsDistance = currSong.y - selectedSong.y; 
-      if( songsDistance <  shorterDistance){
+      const songsDistance = currSong.y - selectedSong.y;
+      if (songsDistance < shorterDistance) {
         nextSong = currSong;
         shorterDistance = songsDistance;
       }
     });
-    if(nextSong)
-      onClick(nextSong);
-  }
+    if (nextSong) onClick(nextSong);
+  };
 
   return (
     <Layer y={layerY}>
@@ -129,6 +128,7 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
           onDblClick={() => {}}
         />
       ))}
+      <AudioPlayer />
       <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />
     </Layer>
   );
