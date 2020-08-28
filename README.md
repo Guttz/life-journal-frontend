@@ -1,4 +1,6 @@
-This is the Frontend for my Music Timeline application, where you can build your own timeline using the Spotify API and play a preview of them.
+This is the Frontend for my Music Timeline application, where you can build your own timeline, dragging songs around, with infinite zoom in/out to the timeline. It uses React + Typescript and a Canva-based library called Konva. The backend is also written in TS and powered by Spotify API to provide and add new songs, available at: https://github.com/Guttz/life-journal-backend
+
+![Music Timeline Example Image](https://i.imgur.com/Ij7Qkz0.png)
 
 ## Available Scripts
 
