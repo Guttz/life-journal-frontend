@@ -3,9 +3,9 @@ import { SongInterface } from './songs.interfaces';
 import SONG_ACTIONS from './songs.actions';
 import { Dispatch, AnyAction } from 'redux';
 import { AxiosResponse } from 'axios';
+
 const fetchSongs = (): any => {
   const http = new HTTPClient();
-
   // Fazer query pro db com todas as músicas
   const request = http.post<AxiosResponse<SongInterface[]>>('/song/fetchSongs', {});
 

@@ -128,8 +128,9 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
           onDblClick={() => {}}
         />
       ))}
-      <AudioPlayer />
-      <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />
+
+      {/* <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />*/}
+      <AudioPlayer songURL={selectedSong?.imageURL} />
     </Layer>
   );
 };
