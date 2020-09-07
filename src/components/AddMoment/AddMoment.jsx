@@ -9,8 +9,8 @@ const AddMoment = ({ onClick, scaleY }) => {
     <Image
       onClick={onClick}
       absolutePosition={{
-        x: window.innerWidth / 2 - 33,
-        y: window.innerHeight - 85,
+        x: window.innerWidth - 80,
+        y: window.innerHeight - 80,
       }}
       width={66}
       height={66}

@@ -129,7 +129,7 @@ const SongsComponent: React.FC<StateProps & DispatchProps> = ({
         />
       ))}
 
-      {/* <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />*/}
+      <AddMoment onClick={() => setHideAddSongs(!hideAddSongs)} />
       <AudioPlayer songURL={selectedSong?.imageURL} />
     </Layer>
   );

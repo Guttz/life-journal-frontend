@@ -105,9 +105,11 @@ const AudioPlayer: React.FC<Props> = ({}) => {
                   auxAnimation++;
                   console.log(+new Date() - startDate + ' == ' + processedBufferFreq[auxAnimation].playbackTime * 1000);
                   setSoundbeatArray(processedBufferFreq[auxAnimation].data);
-                  setTimeout(() => {
-                    syncSprites();
-                  }, processedBufferFreq[auxAnimation + 1].playbackTime * 1000 - (+new Date() - startDate));
+                  if (auxAnimation + 1 < processedBufferFreq.length) {
+                    setTimeout(() => {
+                      syncSprites();
+                    }, processedBufferFreq[auxAnimation + 1].playbackTime * 1000 - (+new Date() - startDate));
+                  }
                 };
                 syncSprites();
               };
@@ -138,8 +140,11 @@ const AudioPlayer: React.FC<Props> = ({}) => {
             togglePlayPause();
           } else {
             loadMusic(
-              'https://p.scdn.co/mp3-preview/819980211c2d492dfdce4967df6176f86c2023f2?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
+              'https://p.scdn.co/mp3-preview/97bb46bf1d8c0f4085378c93a41bd885f2fe323f?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
             );
+            // loadMusic(
+            //   'https://p.scdn.co/mp3-preview/819980211c2d492dfdce4967df6176f86c2023f2?cid=21dbe53cbabe4f03b2ad3090342a7bbc',
+            // );
           }
         }}
         absolutePosition={{
