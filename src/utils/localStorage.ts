@@ -23,7 +23,7 @@ export const getToken = (): string => {
   if (!localStorage.getItem('user')) return '';
 
   // Later when creating editable user, replace any
-  let user: any = localStorage.getItem('user');
+  let user = localStorage.getItem('user');
   user = JSON.parse(user);
   if (user) return user['token'];
   else return '';
