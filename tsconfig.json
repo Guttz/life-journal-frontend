@@ -1,4 +1,7 @@
 {
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off"
+  },
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -10,7 +13,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
