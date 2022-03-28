@@ -4,7 +4,7 @@ import { Image } from 'react-konva';
 import useImage from 'use-image';
 
 const AddMoment = ({ onClick, scaleY }) => {
-  const [image] = useImage('https://image.flaticon.com/icons/svg/148/148764.svg');
+  const [image] = useImage('https://cdn-icons-png.flaticon.com/512/1828/1828819.png');
   return (
     <Image
       onClick={onClick}
