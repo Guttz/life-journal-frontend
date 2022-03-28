@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "build": true
+  },
+  "search.exclude": {
+    "build": true
+  },
+  "god.tsconfig": "./tsconfig.json",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

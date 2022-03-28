@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { AnyAction, Dispatch } from 'redux';
+import { Dispatch } from 'redux';
 import HTTPClient from '../../utils/httpClient';
 import { DispatchFunction } from '../../utils/SharedTypes';
 import { UserCreated, UserCreateError } from './user.actions';

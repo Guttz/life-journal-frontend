@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { saveState, loadState } from './../utils/localStorage';
+import { saveState } from './../utils/localStorage';
 
 // Logger with default options
 import logger from 'redux-logger';
@@ -9,7 +9,7 @@ import { rootReducer } from './rootState';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export default function configureStore(): any {
+export default function configureStore() {
   //const persistedState = loadState();
   const store = createStore(rootReducer, {}, applyMiddleware(logger, thunk));
 

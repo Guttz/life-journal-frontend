@@ -1,8 +1,5 @@
-import { ON_INSERT_SONG, ON_UPDATE_SONG, ON_DELETE_SONG, ON_SET_SONGS } from './songs.actions';
-import { SongInterface, SongsInterface } from './songs.interfaces';
-import { SongsActionsTypes } from './songs.actions.types';
 import { UserState } from './user.interfaces';
-import { ON_CREATE_USER, ON_CREATE_USER_ERROR, ON_USER_CREATED, UserActions } from './user.actions';
+import { ON_CREATE_USER_ERROR, ON_USER_CREATED, UserActions } from './user.actions';
 
 const defaultState: UserState = {
   createdUser: undefined,
