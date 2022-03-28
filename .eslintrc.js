@@ -10,7 +10,7 @@ module.exports = {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
     ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
+      jsx: true, // Allows for the parsing of JSX´
     },
   },
   rules: {
@@ -18,6 +18,7 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'react/prop-types': 0,
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   settings: {
     react: {
